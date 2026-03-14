@@ -2,189 +2,400 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ancient Golden Coin (ANGC)</title>
-
   <link rel="icon" href="favicon.ico" />
-  <meta name="description" content="Ancient Golden Coin (ANGC) is a Solana-based cultural digital asset inspired by ancient civilizations. Fixed supply. LP locked.">
+  <meta
+    name="description"
+    content="Ancient Golden Coin (ANGC) is a Solana-based digital relic and collection-item style cultural asset inspired by ancient civilizations."
+  />
 
   <style>
+    :root {
+      --bg: #0d0b08;
+      --bg-2: #120f0b;
+      --panel: #17130d;
+      --panel-2: #1d1810;
+      --line: rgba(212, 175, 55, 0.18);
+      --gold: #d4af37;
+      --gold-soft: #efd68b;
+      --text: #f1e7c2;
+      --muted: #cdbf93;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Georgia, serif;
-      background: #0d0b08;
-      color: #e6d8a3;
-      line-height: 1.7;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top, rgba(212, 175, 55, 0.08), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, #090806 100%);
+      color: var(--text);
+      line-height: 1.75;
     }
 
-    a { color: #d4af37; text-decoration: none; }
+    a {
+      color: var(--gold);
+      text-decoration: none;
+    }
 
-    header {
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 52px 32px 40px;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(212, 175, 55, 0.18), transparent 34%),
+        radial-gradient(circle at 100% 15%, rgba(255, 200, 90, 0.08), transparent 28%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        var(--panel);
+      box-shadow: var(--shadow);
       text-align: center;
-      padding: 50px 20px;
     }
 
-    header img {
-      max-width: 140px;
-      margin-bottom: 20px;
+    .hero img {
+      width: 132px;
+      max-width: 42vw;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font: 700 12px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 16px;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: 0.95;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 38px);
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 190px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.08));
+      color: #fff6d7;
+      font: 700 14px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--gold-soft);
     }
 
     section {
-      max-width: 1100px;
-      margin: auto;
-      padding: 60px 20px;
+      margin-top: 26px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 42px 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)), var(--panel-2);
+      box-shadow: var(--shadow);
     }
 
-    h1, h2 {
-      color: #d4af37;
-      letter-spacing: 1px;
+    .center {
       text-align: center;
     }
 
-    .center { text-align: center; }
+    .lead {
+      max-width: 860px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 18px;
+    }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+      margin-top: 28px;
     }
 
     .card {
-      background: #15120c;
-      padding: 20px;
-      border: 1px solid #2a2416;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 22px;
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      border-radius: 20px;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold-soft);
+      font: 700 15px/1.35 "Segoe UI", sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .card img {
       width: 100%;
-      border: 1px solid #3a321f;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 16px;
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .meta-box {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .meta-box span {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold);
+      font: 700 11px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .meta-box strong {
+      color: #fff6d7;
+      font: 700 15px/1.4 "Segoe UI", sans-serif;
+    }
+
+    .disclaimer {
+      max-width: 860px;
+      margin: 30px auto 0;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--muted);
+      text-align: center;
     }
 
     footer {
-      background: #0b0906;
-      border-top: 1px solid #2a2416;
-      padding: 40px 20px;
+      margin-top: 26px;
+      border-top: 1px solid rgba(212, 175, 55, 0.12);
+      padding: 34px 20px 0;
       text-align: center;
       font-size: 14px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 14px 14px 56px;
+      }
+
+      .hero,
+      section {
+        border-radius: 22px;
+      }
+
+      .hero {
+        padding: 34px 18px 30px;
+      }
+
+      section {
+        padding: 28px 16px;
+      }
     }
   </style>
 </head>
 
 <body>
-
-<header>
-  <img src="logo.png" alt="ANGC Logo">
-  <h1>Ancient Golden Coin</h1>
-  <p>A cultural digital asset inspired by ancient civilizations</p>
-</header>
-
-<section>
-  <h2>What is ANGC?</h2>
-  <p class="center">
-    Ancient Golden Coin (ANGC) is a Solana-based cultural digital asset designed as a modern on-chain relic.
-    It emphasizes symbolism, permanence, and transparency rather than financial promises.
-  </p>
-</section>
-
-<section>
-  <h2>Design Philosophy</h2>
-  <div class="grid">
-    <div class="card">
+  <main class="shell">
+    <header class="hero">
+      <img src="logo.png" alt="ANGC Logo" />
+      <p class="eyebrow">Ancient Golden Coin / Solana / Digital Relic</p>
+      <h1>Ancient Golden Coin</h1>
       <p>
-        ANGC has a fixed and final supply. All core mechanics are verifiable on-chain,
-        with liquidity locked to reinforce long-term transparency.
+        A cultural digital asset shaped as a modern on-chain relic: symbolic, memorable,
+        and built around permanence rather than empty noise.
       </p>
-    </div>
-    <div class="card">
-      <p>
-        The project follows a community-led and intentionally teamless structure,
-        prioritizing immutability over authority.
+      <div class="hero-actions">
+        <a class="button" href="whitepaper/" target="_blank" rel="noopener">Open Whitepaper</a>
+        <a class="button secondary" href="whitepaper.pdf" target="_blank" rel="noopener">Download PDF</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>What ANGC Is</h2>
+      <p class="lead center">
+        Ancient Golden Coin (ANGC) is a Solana-based cultural digital asset designed as a
+        digital relic with collection-item aura. It emphasizes symbolism, permanence, visual
+        identity, and public transparency rather than financial promises.
       </p>
-    </div>
-    <div class="card">
-      <p>
-        ANGC is positioned as a cultural artifact — a digital expression of ancient value
-        interpreted through modern blockchain infrastructure.
+      <div class="meta-strip">
+        <div class="meta-box">
+          <span>Chain</span>
+          <strong>Solana</strong>
+        </div>
+        <div class="meta-box">
+          <span>Ticker</span>
+          <strong>ANGC</strong>
+        </div>
+        <div class="meta-box">
+          <span>Positioning</span>
+          <strong>Cultural Digital Relic</strong>
+        </div>
+        <div class="meta-box">
+          <span>Classification</span>
+          <strong>Not an NFT</strong>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Design Philosophy</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>Relic Over Noise</strong>
+          <p>
+            ANGC is meant to feel preserved rather than disposable: more like a remembered
+            object than a passing meme fragment.
+          </p>
+        </div>
+        <div class="card">
+          <strong>Collection-Item Aura</strong>
+          <p>
+            The token leans into symbolism, memory, scarcity language, and collector psychology
+            without pretending to be an NFT or a claim on physical gold.
+          </p>
+        </div>
+        <div class="card">
+          <strong>Transparency Over Hype</strong>
+          <p>
+            Official links, contract visibility, and public references matter more than loud
+            promises, private messages, or fabricated urgency.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3D Visualization</h2>
+      <p class="lead center">
+        Conceptual three-dimensional studies highlighting form, weight, material memory, and
+        intentionally imperfect ancient-style edges.
       </p>
-    </div>
-  </div>
-</section>
+      <div class="grid">
+        <div class="card">
+          <img src="coin-3d-front.png" alt="ANGC front view" />
+          <p class="center">Front View</p>
+        </div>
+        <div class="card">
+          <img src="coin-3d-side.png" alt="ANGC side view" />
+          <p class="center">Side View</p>
+        </div>
+        <div class="card">
+          <img src="coin-3d-back.png" alt="ANGC back view" />
+          <p class="center">Back View</p>
+        </div>
+      </div>
+    </section>
 
-<section>
-  <h2>3D Visualization</h2>
-  <p class="center">
-    Conceptual three-dimensional visuals highlighting form, depth,
-    and intentionally imperfect ancient-style edges.
-  </p>
+    <section>
+      <h2>Inscribed Document</h2>
+      <p class="lead center">
+        Each concept is accompanied by a written inscription: a symbolic document reflecting
+        origin, meaning, provenance, and the relic-like frame of the project.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <img src="paper-front.png" alt="Inscription front" />
+          <p class="center">Inscription - Front</p>
+        </div>
+        <div class="card">
+          <img src="paper-back.png" alt="Inscription back" />
+          <p class="center">Inscription - Back</p>
+        </div>
+      </div>
+      <div class="disclaimer">
+        ANGC may be described as a digital relic or collection item in a cultural sense.
+        It is not an NFT, not a certificate for real gold, and not a promise of returns.
+      </div>
+    </section>
 
-  <div class="grid">
-    <div class="card">
-      <img src="coin-3d-front.png" alt="3D Front View">
-      <p class="center">Front View</p>
-    </div>
-    <div class="card">
-      <img src="coin-3d-side.png" alt="3D Side View">
-      <p class="center">Side View</p>
-    </div>
-    <div class="card">
-      <img src="coin-3d-back.png" alt="3D Back View">
-      <p class="center">Back View</p>
-    </div>
-  </div>
-</section>
+    <section class="center">
+      <h2>Market Data &amp; Transparency</h2>
+      <img src="geckoterminal.png" alt="GeckoTerminal" style="max-width: 180px; margin: 12px 0 18px;" />
+      <p class="lead">
+        Track the live Raydium pool and public on-chain discovery surface through GeckoTerminal.
+      </p>
+      <p style="margin-top: 22px;">
+        <a class="button secondary" href="https://www.geckoterminal.com/solana/pools/FCtckU1yLwKKxutJ29KQoKj6nJToXqR6PaHQusU8aA6c" target="_blank" rel="noopener">
+          View ANGC on GeckoTerminal
+        </a>
+      </p>
+    </section>
 
-<section>
-  <h2>Inscribed Document</h2>
-  <p class="center">
-    Each concept is accompanied by a written inscription — a symbolic document
-    reflecting origin, meaning, and provenance.
-  </p>
+    <section class="center">
+      <h2>Documentation</h2>
+      <p class="lead">
+        The updated whitepaper is available both as a web reading experience and as a printable PDF.
+      </p>
+      <div class="hero-actions" style="margin-top: 24px;">
+        <a class="button" href="whitepaper/" target="_blank" rel="noopener">Read the Web Whitepaper</a>
+        <a class="button secondary" href="whitepaper.pdf" target="_blank" rel="noopener">Read the PDF</a>
+      </div>
+    </section>
 
-  <div class="grid">
-    <div class="card">
-      <img src="paper-front.png" alt="Inscription Front">
-      <p class="center">Inscription — Front</p>
-    </div>
-    <div class="card">
-      <img src="paper-back.png" alt="Inscription Back">
-      <p class="center">Inscription — Back</p>
-    </div>
-  </div>
-
-  <p class="center" style="margin-top:40px;">
-    This is not a digital collectible and not an NFT.<br>
-    It is a tangible concept tied to symbolism, scarcity, and cultural memory —
-    bridging the ancient world with modern on-chain transparency.
-  </p>
-</section>
-
-<section class="center">
-  <h2>Market Data & Transparency</h2>
-  <img src="geckoterminal.png" alt="GeckoTerminal" style="max-width:180px;margin:20px 0;">
-  <p>
-    Track real-time on-chain data via GeckoTerminal.
-  </p>
-  <p>
-    <a href="https://www.geckoterminal.com/solana/pools/FCtckU1yLwKKxutJ29KQoKj6nJToXqR6PaHQusU8aA6c" target="_blank">
-      View ANGC on GeckoTerminal →
-    </a>
-  </p>
-</section>
-
-<section class="center">
-  <h2>Documentation</h2>
-  <p>
-    <a href="whitepaper.pdf" target="_blank">
-      Read the Whitepaper (PDF)
-    </a>
-  </p>
-</section>
-
-<footer>
-  <p>Ancient Golden Coin (ANGC) — Digital relic of a forgotten era.</p>
-  <p>No promises. No DMs. Official links only.</p>
-</footer>
-
+    <footer>
+      <p>Ancient Golden Coin (ANGC) - digital relic of a forgotten era.</p>
+      <p>No promises. No DMs. Official links only.</p>
+    </footer>
+  </main>
 </body>
 </html>
