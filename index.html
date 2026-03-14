@@ -224,6 +224,104 @@
       text-align: center;
     }
 
+    .contract-box {
+      margin-top: 26px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .contract-box span {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font: 700 11px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .contract-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contract-code {
+      display: inline-block;
+      max-width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      background: rgba(0, 0, 0, 0.18);
+      color: #fff6d7;
+      font: 600 13px/1.5 "Consolas", "Courier New", monospace;
+      word-break: break-all;
+    }
+
+    .mini-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--gold-soft);
+      font: 700 12px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .link-card {
+      display: block;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      background: rgba(255, 255, 255, 0.02);
+      text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .link-card:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      border-color: rgba(212, 175, 55, 0.3);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .link-card span {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold);
+      font: 700 11px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .link-card strong {
+      display: block;
+      color: #fff6d7;
+      font: 700 15px/1.35 "Segoe UI", sans-serif;
+    }
+
+    .link-card small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font: 500 12px/1.5 "Segoe UI", sans-serif;
+    }
+
     footer {
       margin-top: 26px;
       border-top: 1px solid rgba(212, 175, 55, 0.12);
@@ -379,6 +477,52 @@
           View ANGC on GeckoTerminal
         </a>
       </p>
+      <div class="contract-box">
+        <span>Official Contract Address</span>
+        <div class="contract-row">
+          <code class="contract-code" id="contractAddress">9phsToFNigvC1g7A6k1bhtYnzN78Jyq9SLFYbChyaH4P</code>
+          <button class="mini-button" id="copyContractButton" type="button">Copy CA</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Official Links</h2>
+      <p class="lead center">
+        Use only official public links. No private messages, no wallet access requests, and no unofficial support pages.
+      </p>
+      <div class="links-grid">
+        <a class="link-card" href="https://angccoin.com" target="_blank" rel="noopener">
+          <span>Website</span>
+          <strong>angccoin.com</strong>
+          <small>Primary official public surface.</small>
+        </a>
+        <a class="link-card" href="whitepaper/" target="_blank" rel="noopener">
+          <span>Web Whitepaper</span>
+          <strong>Read Online</strong>
+          <small>Clean reading version of the current whitepaper.</small>
+        </a>
+        <a class="link-card" href="whitepaper.pdf" target="_blank" rel="noopener">
+          <span>Whitepaper PDF</span>
+          <strong>Download PDF</strong>
+          <small>Printable and shareable version.</small>
+        </a>
+        <a class="link-card" href="https://www.geckoterminal.com/solana/pools/FCtckU1yLwKKxutJ29KQoKj6nJToXqR6PaHQusU8aA6c" target="_blank" rel="noopener">
+          <span>GeckoTerminal</span>
+          <strong>Live Pool Surface</strong>
+          <small>Public price, liquidity, and on-chain discovery link.</small>
+        </a>
+        <a class="link-card" href="https://github.com/alperceviz/angc-website" target="_blank" rel="noopener">
+          <span>GitHub</span>
+          <strong>Official Website Repo</strong>
+          <small>Public website source and whitepaper updates.</small>
+        </a>
+        <a class="link-card" href="https://x.com/ANGCcoin" target="_blank" rel="noopener">
+          <span>X</span>
+          <strong>@ANGCcoin</strong>
+          <small>Official public social handle.</small>
+        </a>
+      </div>
     </section>
 
     <section class="center">
@@ -397,5 +541,22 @@
       <p>No promises. No DMs. Official links only.</p>
     </footer>
   </main>
+  <script>
+    (function () {
+      var button = document.getElementById("copyContractButton");
+      var code = document.getElementById("contractAddress");
+      if (!button || !code || !navigator.clipboard) {
+        return;
+      }
+      button.addEventListener("click", function () {
+        navigator.clipboard.writeText(code.textContent || "").then(function () {
+          button.textContent = "Copied";
+          window.setTimeout(function () {
+            button.textContent = "Copy CA";
+          }, 1800);
+        });
+      });
+    }());
+  </script>
 </body>
 </html>
