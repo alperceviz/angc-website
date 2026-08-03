@@ -29,6 +29,12 @@ export const routes = [
 
   { path: "/profile", load: () => import("../views/profile.js") },
   { path: "/settings", load: () => import("../views/settings.js") },
+
+  // Yönetim paneli — yalnızca site yönetimi
+  { path: "/admin", load: () => import("../views/admin.js"), roles: ["admin"] },
+  { path: "/admin/site", load: () => import("../views/admin-site.js"), roles: ["admin"] },
+  { path: "/admin/data", load: () => import("../views/admin-data.js"), roles: ["admin"] },
+  { path: "/admin/c/:name", load: () => import("../views/admin-collection.js"), roles: ["admin"] },
 ];
 
 /** Adres çubuğundaki yolu döndürür. */

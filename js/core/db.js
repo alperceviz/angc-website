@@ -9,7 +9,7 @@
  */
 import * as bus from "./bus.js";
 
-const KEY = "nobetci.db.v2";
+const KEY = "guvendeyim.db.v1";
 
 /** @type {object|null} */
 let state = null;
@@ -185,4 +185,72 @@ export async function reset() {
 /** Yedek/dışa aktarım. */
 export function exportJson() {
   return JSON.stringify(state, null, 2);
+}
+
+/** Koleksiyonun tamamını değiştirir (yapılandırma içe aktarımında kullanılır). */
+export function setCollection(name, arr) {
+  state[name] = Array.isArray(arr) ? arr : [];
+  touched(name);
+  return state[name];
+}
+
+/** Kurulum sırasında başka bir siteye taşınabilecek yapılandırma. */
+const CONFIG_KEYS = ["site", "checkpoints", "amenities", "contacts"];
+
+/** Kişisel veri içermeyen site yapılandırmasını dışa aktarır. */
+export function exportConfig() {
+  const out = { _type: "guvendeyim.config", _version: 1, exportedAt: nowIso() };
+  CONFIG_KEYS.forEach((k) => (out[k] = state[k]));
+  // Demo işareti yeni kuruluma taşınmasın.
+  out.site = { ...out.site, demo: false };
+  return JSON.stringify(out, null, 2);
+}
+
+/**
+ * Dışa aktarılmış yapılandırmayı yükler.
+ * @returns {{ok:boolean, error?:string}}
+ */
+export function importConfig(json) {
+  let doc;
+  try {
+    doc = JSON.parse(json);
+  } catch {
+    return { ok: false, error: "Dosya okunamadı — geçerli bir JSON değil." };
+  }
+  if (doc._type !== "guvendeyim.config")
+    return { ok: false, error: "Bu dosya bir Güvendeyim yapılandırması değil." };
+  CONFIG_KEYS.forEach((k) => {
+    if (doc[k] === undefined) return;
+    state[k] = doc[k];
+  });
+  write();
+  bus.emitLocal("db:change", { collection: "*" });
+  bus.emit("db:remote", { collection: "*" });
+  return { ok: true };
+}
+
+/**
+ * İşlem kayıtlarını siler, site yapılandırmasını korur.
+ * Demodan gerçek kuruluma geçerken kullanılır.
+ * @param {{users?:boolean}} opt - users:true ise demo kullanıcıları da silinir
+ *   (giriş yapmış yönetici hesabı hariç).
+ */
+export function clearOperationalData({ users = false, keepUserId = "" } = {}) {
+  [
+    "visitors",
+    "packages",
+    "incidents",
+    "patrols",
+    "shifts",
+    "bookings",
+    "logs",
+    "notifications",
+    "announcements",
+    "vehicles",
+  ].forEach((k) => (state[k] = []));
+  if (users) state.users = state.users.filter((u) => u.id === keepUserId);
+  state.site = { ...state.site, demo: false };
+  write();
+  bus.emitLocal("db:change", { collection: "*" });
+  bus.emit("db:remote", { collection: "*" });
 }

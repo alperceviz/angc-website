@@ -6,6 +6,7 @@ import { icon } from "../ui/icons.js";
 import { sectionTitle, switchRow, wireFields, banner, kv } from "../ui/components.js";
 import { downloadText } from "../util/media.js";
 import { esc } from "../util/format.js";
+import { brandName } from "../core/brand.js";
 
 export default {
   title: "Ayarlar",
@@ -66,7 +67,7 @@ export default {
         ${sectionTitle("Uygulamayı yükle")}
         <div class="card">
           ${banner(
-            "Nöbetçi bir web uygulamasıdır (PWA). Telefonun ana ekranına eklediğinizde uygulama gibi tam ekran açılır ve çevrimdışı çalışır.",
+            `${brandName()} bir web uygulamasıdır (PWA). Telefonun ana ekranına eklediğinizde uygulama gibi tam ekran açılır ve çevrimdışı çalışır.`,
             "",
             "install"
           )}
@@ -93,7 +94,7 @@ export default {
 
         ${sectionTitle("Hakkında")}
         <div class="card">
-          ${kv("Uygulama", "Nöbetçi")}
+          ${kv("Uygulama", esc(brandName()))}
           ${kv("Sürüm", "1.0.0")}
           ${kv("Site", esc(db.raw().site.name))}
           ${kv("Oturum", esc(ctx.user.name + " · " + auth.roleLabel(ctx.user.role)))}

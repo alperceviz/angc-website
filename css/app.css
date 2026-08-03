@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Nöbetçi — Site Güvenlik & Yaşam Uygulaması
+   Güvendeyim — Site Güvenlik & Yaşam Uygulaması
    Design system: mobile-first, tek elle kullanım, gece vardiyası için koyu tema.
    ========================================================================== */
 
@@ -19,9 +19,9 @@
   --text-dim: #a9b8d0;
   --text-faint: #7488a5;
 
-  --accent: #ffb020;
-  --accent-ink: #2a1b00;
-  --accent-soft: rgba(255, 176, 32, 0.14);
+  --accent: #ffc800;
+  --accent-ink: #171200;
+  --accent-soft: rgba(255, 200, 0, 0.15);
 
   --info: #56a8ff;
   --info-soft: rgba(86, 168, 255, 0.14);
@@ -154,7 +154,7 @@ a {
   body {
     background: radial-gradient(
         900px 500px at 50% -10%,
-        rgba(255, 176, 32, 0.07),
+        color-mix(in srgb, var(--accent) 8%, transparent),
         transparent 70%
       ),
       var(--bg);

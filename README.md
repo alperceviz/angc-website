@@ -1,4 +1,4 @@
-# Nöbetçi — Site Güvenlik ve Yaşam Uygulaması
+# Güvendeyim — Site Güvenlik ve Yaşam Uygulaması
 
 Sitelerdeki (konut kompleksleri) güvenlik kulübesi ile site sakinlerini **tek bir
 mobil uygulamada** buluşturan, kurulum gerektirmeyen bir PWA.
@@ -8,7 +8,12 @@ misafir bildirimi, talep açma, kargo takibi, tesis rezervasyonu ve acil çağr�
 İkisi aynı veriyi paylaştığı için kapıda "bir dakika, arayıp soralım" adımı ortadan
 kalkıyor.
 
-> **Önerilen depo adı:** `nobetci-app`
+İlk kurulum **Dünya Şehir Kartal** içindir. Uygulama tek bir siteye gömülü değil:
+site adı, adresi, blokları, telefonları, devriye noktaları, tesisleri, rehberi ve
+marka rengi yönetim panelinden düzenlenir; başka bir siteye kurmak için tek
+yapılacak şey yapılandırmayı dışa aktarıp yeni cihazda içe aktarmaktır.
+
+> **Önerilen depo adı:** `guvendeyim`
 > (GitHub → Settings → Repository name üzerinden değiştirebilirsiniz.)
 
 ---
@@ -71,6 +76,38 @@ görevlinin rehber ekranı da "bu bilgiler görev gereği kullanılır" uyarıs�
 - Duyuru yayınlama (sabitleme dahil), olay takibi, sakin ve daire kayıtları
 - **Raporlar** — 7 günlük hareket grafiği, devriye uyum oranı, olay türü dağılımı,
   ortalama çözüm süresi
+- **Yönetim paneli** — aşağıya bakın
+
+---
+
+## Yönetim paneli ve yerel özelleştirme
+
+Yönetici rolüyle girildiğinde alt sekmelerde **Yönetim** görünür. Panel, kurulumun
+eksik kalan maddelerini (girilmemiş telefon, tanımsız blok, duruyor olan demo
+kayıtları…) sayar ve doğrudan ilgili ekrana götürür.
+
+| Bölüm | Ne düzenlenir |
+|---|---|
+| **Site bilgileri** | Ad, kısa ad, adres, güvenlik ve yönetim telefonu, acil toplanma alanı, blok listesi |
+| **Marka** | Uygulama adı (beyaz etiket) ve vurgu rengi — canlı önizlemeli |
+| **Kullanıcılar** | Görevli / sakin / yönetici hesapları, blok-daire, sicil, PIN sıfırlama |
+| **Devriye noktaları** | Kontrol noktaları, bölge ve 4 haneli nokta kodları, tur sırası |
+| **Sosyal tesisler** | Rezervasyona açık alanlar, çalışma saatleri, kapasite, dilim süresi |
+| **Telefon rehberi** | Site, acil ve arıza numaraları |
+| **Veri ve kurulum** | Yapılandırmayı dışa/içe aktarma, demo kayıtlarını temizleme, yedek |
+
+Vurgu rengi değiştiğinde düğmeler, sekmeler ve tüm vurgular anında yeni renge
+geçer. Açık temada parlak renkler yazı olarak okunmaz hâle geleceği için renk
+otomatik koyulaştırılır; koyu temada seçilen renk aynen kullanılır.
+
+### Başka bir siteye kurmak
+
+1. Yönetim paneli → **Veri ve kurulum → Yapılandırmayı dışa aktar**.
+   Dosyaya yalnızca site ayarları, devriye noktaları, tesisler ve rehber girer —
+   **kullanıcılar ve tüm kişisel kayıtlar dışarıda kalır**.
+2. Yeni kurulumda aynı ekrandan dosyayı yükleyin.
+3. Kullanıcıları tanımlayın, ardından **Demo hareketlerini temizle** ile
+   ziyaretçi/kargo/olay/defter kayıtlarını sıfırlayın. Site yapılandırması korunur.
 
 ---
 
@@ -112,9 +149,10 @@ js/
     auth.js             oturum, roller, vardiya
     router.js           hash yönlendirme + rol bazlı erişim
     bus.js              olay veri yolu + sekmeler arası köprü
+    brand.js            marka adı/rengi, tema uyumu, kurulum eksikleri
   ui/                   dom, ikonlar, bileşenler, sheet, toast
   util/                 biçimlendirme, fotoğraf sıkıştırma, indirme
-  views/                18 ekran
+  views/                22 ekran (4'ü yönetim paneli)
 ```
 
 Öne çıkan birkaç karar:
@@ -127,6 +165,10 @@ js/
   karanlıkta kullanım varsayılmıştır.
 - **Erişilebilirlik.** `aria-pressed` / `role="switch"` / `aria-current`, klavye
   ile panik butonu, `prefers-reduced-motion` desteği.
+- **Tek şema, dört ekran.** Kullanıcı, devriye noktası, tesis ve rehber
+  düzenleyicileri aynı şema güdümlü bileşeni paylaşır
+  (`js/views/admin-collection.js`); yeni bir koleksiyon eklemek bir şema tanımı
+  yazmaktan ibarettir.
 
 ### Gerçek kuruluma geçiş
 
@@ -143,9 +185,9 @@ kullanılacaksa üç şey gerekir:
    yerine WebSocket veya Web Push konur; acil çağrı böylece uygulama kapalıyken de
    görevlinin telefonunu çaldırır.
 
-Yol haritasında ayrıca: kontrol noktalarında QR/NFC etiketi okuma, çoklu site
-desteği, aidat/ödeme, kamera görüntüsü entegrasyonu ve KVKK aydınlatma metni akışı
-var.
+Yol haritasında ayrıca: kontrol noktalarında QR/NFC etiketi okuma, tek panelden
+çoklu site yönetimi, aidat/ödeme, kamera görüntüsü entegrasyonu ve KVKK aydınlatma
+metni akışı var.
 
 ---
 

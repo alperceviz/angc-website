@@ -6,6 +6,7 @@ import * as db from "./core/db.js";
 import * as auth from "./core/auth.js";
 import * as bus from "./core/bus.js";
 import { currentPath, match, navigate, query } from "./core/router.js";
+import { applyBrand, setupGaps, brandName } from "./core/brand.js";
 import { el, qs, qsa } from "./ui/dom.js";
 import { icon } from "./ui/icons.js";
 import { sheet, confirm } from "./ui/sheet.js";
@@ -37,7 +38,7 @@ const TABS = {
     { path: "/", icon: "home", label: "Ana Sayfa" },
     { path: "/incidents", icon: "alert", label: "Olaylar", badge: "openIncidents" },
     { path: "/announcements", icon: "megaphone", label: "Duyurular" },
-    { path: "/reports", icon: "chart", label: "Raporlar" },
+    { path: "/admin", icon: "settings", label: "Yönetim", badge: "setupGaps" },
     { menu: true, icon: "grid", label: "Menü" },
   ],
 };
@@ -64,6 +65,8 @@ const MENU = {
     ["/settings", "settings", "Ayarlar"],
   ],
   admin: [
+    ["/admin", "settings", "Yönetim Paneli"],
+    ["/reports", "chart", "Raporlar"],
     ["/visitors", "users", "Ziyaretçi Kayıtları"],
     ["/packages", "package", "Kargo & Teslimat"],
     ["/patrol", "route", "Devriye Turları"],
@@ -81,6 +84,7 @@ const MENU = {
 function badgeCounts() {
   return {
     openIncidents: db.list("incidents", (i) => i.status !== "resolved").length,
+    setupGaps: auth.isAdmin() ? setupGaps().length : 0,
   };
 }
 
@@ -337,7 +341,7 @@ async function renderView() {
       ? currentModule.subtitle(ctx)
       : currentModule.subtitle;
   qs("#appbar-title", rootEl).innerHTML =
-    esc(title || "Nöbetçi") + (sub ? `<span class="appbar__sub">${esc(sub)}</span>` : "");
+    esc(title || "Güvendeyim") + (sub ? `<span class="appbar__sub">${esc(sub)}</span>` : "");
 
   const isRoot = path === "/" || path === "";
   qs('[data-app="back"]', rootEl).hidden = isRoot;
@@ -483,6 +487,7 @@ function applyTheme() {
   document
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute("content", t === "light" ? "#eef1f7" : "#0b1220");
+  applyBrand();
 }
 
 let dbChangeTimer = null;

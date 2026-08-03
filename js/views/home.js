@@ -1,6 +1,7 @@
 /** Ana ekran — role göre tamamen farklı içerik gösterir. */
 import * as db from "../core/db.js";
 import * as auth from "../core/auth.js";
+import { setupGaps } from "../core/brand.js";
 import { el, actions } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import {
@@ -28,7 +29,7 @@ import {
 } from "../util/format.js";
 
 export default {
-  title: () => db.raw().site.shortName || "Nöbetçi",
+  title: () => db.raw().site.shortName || db.raw().site.name || "Güvendeyim",
   subtitle: (ctx) => auth.roleLabel(ctx.user.role),
   live: true,
 
@@ -417,6 +418,7 @@ function adminHome(u) {
   const onDuty = auth.anyActiveShift();
   const waitingPkgs = db.list("packages", (p) => p.status === "waiting");
   const residents = db.list("users", (x) => x.role === "resident");
+  const gaps = setupGaps();
 
   return `
     <div class="card card--accent">
@@ -444,6 +446,21 @@ function adminHome(u) {
       ${stat(db.list("bookings").length, "Rezervasyon")}
     </div>
 
+    ${
+      gaps.length
+        ? `<button class="card card--accent" type="button" data-act="go" data-to="/admin"
+            style="width:100%;text-align:left;cursor:pointer;margin-top:10px">
+            <div class="card__head" style="margin:0">
+              <span class="tile__icon">${icon("settings")}</span>
+              <div class="card__title">Kurulumu tamamlayın
+                <div class="faint">${gaps.length} madde bekliyor — yönetim paneli</div>
+              </div>
+              ${icon("chevron")}
+            </div>
+          </button>`
+        : ""
+    }
+
     ${sectionTitle("Hızlı işlem")}
     <div class="grid grid-2">
       ${tile({
@@ -454,20 +471,21 @@ function adminHome(u) {
         data: { to: "/announcements" },
       })}
       ${tile({
+        icon: "settings",
+        label: "Yönetim paneli",
+        meta: "Site ayarları, kullanıcılar",
+        tone: "info",
+        act: "go",
+        data: { to: "/admin" },
+        count: gaps.length,
+      })}
+      ${tile({
         icon: "chart",
         label: "Raporlar",
         meta: "Haftalık özet",
-        tone: "info",
-        act: "go",
-        data: { to: "/reports" },
-      })}
-      ${tile({
-        icon: "book",
-        label: "Nöbet defteri",
-        meta: "Tüm kayıtlar",
         tone: "ok",
         act: "go",
-        data: { to: "/logbook" },
+        data: { to: "/reports" },
       })}
       ${tile({
         icon: "building",

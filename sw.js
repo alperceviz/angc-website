@@ -4,7 +4,7 @@
  * Kulübede ve otoparkta bağlantı sık kopar; kabuk ve tüm modüller kurulumda
  * önbelleğe alınır, çalışma verisi zaten cihazda tutulur.
  */
-const VERSION = "nobetci-v1.0.0";
+const VERSION = "guvendeyim-v1.0.0";
 
 const SHELL = [
   "./",
@@ -22,6 +22,7 @@ const SHELL = [
   "js/core/seed.js",
   "js/core/auth.js",
   "js/core/router.js",
+  "js/core/brand.js",
   "js/ui/dom.js",
   "js/ui/icons.js",
   "js/ui/toast.js",
@@ -47,6 +48,10 @@ const SHELL = [
   "js/views/reports.js",
   "js/views/profile.js",
   "js/views/settings.js",
+  "js/views/admin.js",
+  "js/views/admin-site.js",
+  "js/views/admin-collection.js",
+  "js/views/admin-data.js",
 ];
 
 self.addEventListener("install", (event) => {

@@ -4,6 +4,7 @@ import * as auth from "../core/auth.js";
 import { el, qs, haptic } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { esc, initials, unitLabel } from "../util/format.js";
+import { brandName } from "../core/brand.js";
 
 const ROLES = [
   {
@@ -43,7 +44,7 @@ export default {
       root.innerHTML = `
         <div class="login__brand">
           <img src="assets/icon-192.png" alt="" width="78" height="78" />
-          <div class="login__name">Nöbetçi</div>
+          <div class="login__name">${esc(brandName())}</div>
           <div class="login__tag">${esc(site.name)} · Site Güvenlik ve Yaşam Uygulaması</div>
         </div>
         <div id="step"></div>`;

@@ -20,7 +20,7 @@ export function buildSeed() {
       name: "Ayşe Toprak",
       role: "admin",
       title: "Site Yöneticisi",
-      phone: "0532 000 00 01",
+      phone: "0216 000 00 01",
       pin: "1234",
       block: "",
       unit: "",
@@ -145,10 +145,10 @@ export function buildSeed() {
   ];
 
   const contacts = [
-    { id: "c1", group: "Site", name: "Güvenlik Kulübesi", phone: "0212 000 10 10", note: "7/24", icon: "shield" },
-    { id: "c2", group: "Site", name: "Site Yönetimi", phone: "0212 000 10 11", note: "Hafta içi 09:00–18:00", icon: "building" },
-    { id: "c3", group: "Site", name: "Teknik Servis", phone: "0212 000 10 12", note: "Asansör, su, elektrik", icon: "tool" },
-    { id: "c4", group: "Site", name: "Kapıcı (Bina Görevlisi)", phone: "0212 000 10 13", note: "08:00–18:00", icon: "user" },
+    { id: "c1", group: "Site", name: "Güvenlik Kulübesi", phone: "0216 000 00 00", note: "7/24", icon: "shield" },
+    { id: "c2", group: "Site", name: "Site Yönetimi", phone: "0216 000 00 01", note: "Hafta içi 09:00–18:00", icon: "building" },
+    { id: "c3", group: "Site", name: "Teknik Servis", phone: "0216 000 00 02", note: "Asansör, su, elektrik", icon: "tool" },
+    { id: "c4", group: "Site", name: "Kapıcı (Bina Görevlisi)", phone: "0216 000 00 03", note: "08:00–18:00", icon: "user" },
     { id: "c5", group: "Acil", name: "Acil Çağrı Merkezi", phone: "112", note: "Ambulans / Genel acil", icon: "siren" },
     { id: "c6", group: "Acil", name: "İtfaiye", phone: "110", note: "Yangın", icon: "flame" },
     { id: "c7", group: "Acil", name: "Polis İmdat", phone: "155", note: "Asayiş", icon: "shield" },
@@ -368,13 +368,21 @@ export function buildSeed() {
 
   return {
     site: {
-      name: "Yeşilvadi Konutları",
-      shortName: "Yeşilvadi",
-      address: "Vadi Cad. No:14, İstanbul",
-      blocks: ["A", "B", "C", "D"],
-      assemblyPoint: "Ana kapı karşısı — Kuzey otopark alanı",
-      guardPhone: "0212 000 10 10",
-      managerPhone: "0212 000 10 11",
+      // Ürün adı — beyaz etiket kurulumlarında yönetim panelinden değiştirilir.
+      brandName: "Güvendeyim",
+      brandColor: "#ffc800",
+
+      name: "Dünya Şehir Kartal",
+      shortName: "Dünya Şehir",
+      address: "Kartal / İstanbul",
+      blocks: ["A", "B", "C", "D", "E"],
+      assemblyPoint: "Ana kapı karşısı — açık otopark alanı",
+      // Aşağıdaki numaralar örnek değerdir; kurulumda yönetim panelinden girilir.
+      guardPhone: "0216 000 00 00",
+      managerPhone: "0216 000 00 01",
+
+      // Kurulum durumu: demo kayıtları temizlenene kadar açık kalır.
+      demo: true,
     },
     users,
     checkpoints,
