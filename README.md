@@ -206,10 +206,12 @@ metni akışı var.
 
 ---
 
-## Not: alan adı
+## Alan adı
 
-Bu depo daha önce farklı bir projeyi barındırıyordu ve kökteki `CNAME` dosyası hâlâ
-eski alan adına işaret ediyor. Birleştirme yapılırsa o adres bu uygulamayı sunmaya
-başlar. Yeni bir alan adı kullanacaksanız `CNAME` içeriğini değiştirin; alan adı
-istemiyorsanız dosyayı silin (site `kullanıcıadı.github.io/depo-adı` üzerinden
-yayınlanır).
+Bu depo daha önce farklı bir projeyi barındırıyordu ve kökteki `CNAME` dosyası eski
+alan adına işaret ediyordu; depo tamamen bu uygulamaya ayrıldığı için o dosya
+kaldırıldı. Site artık `kullanıcıadı.github.io/depo-adı` adresinden yayınlanır.
+
+Kendi alan adınızı bağlamak için depo köküne tek satırlık bir `CNAME` dosyası
+ekleyip içine alan adını yazmanız ve alan adının DNS kayıtlarını GitHub Pages'e
+yönlendirmeniz yeterli.

@@ -486,7 +486,7 @@ function applyTheme() {
   document.documentElement.setAttribute("data-theme", t);
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", t === "light" ? "#eef1f7" : "#0b1220");
+    ?.setAttribute("content", t === "light" ? "#f2f1ec" : "#0c0c0b");
   applyBrand();
 }
 

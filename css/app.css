@@ -7,36 +7,37 @@
 :root {
   color-scheme: dark;
 
-  --bg: #0b1220;
-  --bg-elev: #111b2e;
-  --surface: #131f35;
-  --surface-2: #182741;
-  --surface-3: #1f3251;
+  /* Siyah–sarı kimlik: yüzeyler nötr-sıcak siyahlar, tek vurgu sarı. */
+  --bg: #0c0c0b;
+  --bg-elev: #141413;
+  --surface: #191917;
+  --surface-2: #21211e;
+  --surface-3: #2d2d29;
   --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.17);
 
-  --text: #eef3fb;
-  --text-dim: #a9b8d0;
-  --text-faint: #7488a5;
+  --text: #f5f3ed;
+  --text-dim: #b5b1a6;
+  --text-faint: #87837a;
 
   --accent: #ffc800;
   --accent-ink: #171200;
   --accent-soft: rgba(255, 200, 0, 0.15);
 
-  --info: #56a8ff;
-  --info-soft: rgba(86, 168, 255, 0.14);
-  --ok: #35d08a;
-  --ok-soft: rgba(53, 208, 138, 0.14);
+  --info: #6ab4ff;
+  --info-soft: rgba(106, 180, 255, 0.14);
+  --ok: #48d495;
+  --ok-soft: rgba(72, 212, 149, 0.14);
   --warn: #ffb020;
   --warn-soft: rgba(255, 176, 32, 0.14);
-  --danger: #ff5b5b;
-  --danger-soft: rgba(255, 91, 91, 0.15);
+  --danger: #ff6161;
+  --danger-soft: rgba(255, 97, 97, 0.16);
 
   --radius: 16px;
   --radius-sm: 11px;
   --radius-lg: 24px;
-  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.3);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.45);
 
   --tap: 48px;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -50,16 +51,16 @@
 
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #eef1f7;
+  --bg: #f2f1ec;
   --bg-elev: #ffffff;
   --surface: #ffffff;
-  --surface-2: #f3f5fa;
-  --surface-3: #e6eaf3;
-  --line: rgba(16, 28, 50, 0.1);
-  --line-strong: rgba(16, 28, 50, 0.2);
-  --text: #101c32;
-  --text-dim: #4a5c7a;
-  --text-faint: #74839c;
+  --surface-2: #f6f5f1;
+  --surface-3: #e9e7e0;
+  --line: rgba(26, 24, 18, 0.1);
+  --line-strong: rgba(26, 24, 18, 0.2);
+  --text: #1a1815;
+  --text-dim: #5a564d;
+  --text-faint: #837f75;
   --accent: #b06f00;
   --accent-ink: #fff6e3;
   --accent-soft: rgba(176, 111, 0, 0.12);
@@ -71,8 +72,8 @@
   --warn-soft: rgba(168, 106, 0, 0.12);
   --danger: #cc2626;
   --danger-soft: rgba(204, 38, 38, 0.1);
-  --shadow: 0 18px 40px rgba(16, 28, 50, 0.14);
-  --shadow-sm: 0 6px 18px rgba(16, 28, 50, 0.1);
+  --shadow: 0 18px 40px rgba(26, 24, 18, 0.14);
+  --shadow-sm: 0 6px 18px rgba(26, 24, 18, 0.1);
 }
 
 /* ---------- Reset ---------- */
@@ -1261,7 +1262,7 @@ a {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: #2a0509;
+  background: #250406;
   color: #fff;
   display: flex;
   flex-direction: column;
