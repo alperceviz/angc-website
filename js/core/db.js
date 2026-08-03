@@ -9,7 +9,7 @@
  */
 import * as bus from "./bus.js";
 
-const KEY = "guvendeyim.db.v1";
+const KEY = "siteapp.db.v1";
 
 /** @type {object|null} */
 let state = null;
@@ -199,7 +199,7 @@ const CONFIG_KEYS = ["site", "checkpoints", "amenities", "contacts"];
 
 /** Kişisel veri içermeyen site yapılandırmasını dışa aktarır. */
 export function exportConfig() {
-  const out = { _type: "guvendeyim.config", _version: 1, exportedAt: nowIso() };
+  const out = { _type: "siteapp.config", _version: 1, exportedAt: nowIso() };
   CONFIG_KEYS.forEach((k) => (out[k] = state[k]));
   // Demo işareti yeni kuruluma taşınmasın.
   out.site = { ...out.site, demo: false };
@@ -217,8 +217,8 @@ export function importConfig(json) {
   } catch {
     return { ok: false, error: "Dosya okunamadı — geçerli bir JSON değil." };
   }
-  if (doc._type !== "guvendeyim.config")
-    return { ok: false, error: "Bu dosya bir Güvendeyim yapılandırması değil." };
+  if (doc._type !== "siteapp.config")
+    return { ok: false, error: "Bu dosya bir site yapılandırma dosyası değil." };
   CONFIG_KEYS.forEach((k) => {
     if (doc[k] === undefined) return;
     state[k] = doc[k];

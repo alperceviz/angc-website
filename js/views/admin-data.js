@@ -1,6 +1,6 @@
 /** Veri ve kurulum — yapılandırma taşıma, demodan gerçek kullanıma geçiş. */
 import * as db from "../core/db.js";
-import { siteName } from "../core/brand.js";
+import { siteName, brandName } from "../core/brand.js";
 import { el, actions, qs } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { sectionTitle, banner, kv } from "../ui/components.js";
@@ -109,7 +109,7 @@ export default {
     actions(root, {
       exportConfig: () => {
         downloadText(
-          `guvendeyim-yapilandirma-${slug(siteName())}.json`,
+          `${slug(brandName())}-yapilandirma-${slug(siteName())}.json`,
           db.exportConfig(),
           "application/json"
         );
@@ -118,7 +118,7 @@ export default {
       importConfig: () => qs("#cfgfile", root).click(),
       exportAll: () => {
         downloadText(
-          `guvendeyim-veri-${new Date().toISOString().slice(0, 10)}.json`,
+          `${slug(brandName())}-veri-${new Date().toISOString().slice(0, 10)}.json`,
           db.exportJson(),
           "application/json"
         );

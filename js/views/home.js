@@ -1,7 +1,7 @@
 /** Ana ekran — role göre tamamen farklı içerik gösterir. */
 import * as db from "../core/db.js";
 import * as auth from "../core/auth.js";
-import { setupGaps } from "../core/brand.js";
+import { setupGaps, brandName } from "../core/brand.js";
 import { el, actions } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import {
@@ -29,7 +29,7 @@ import {
 } from "../util/format.js";
 
 export default {
-  title: () => db.raw().site.shortName || db.raw().site.name || "Güvendeyim",
+  title: () => db.raw().site.shortName || db.raw().site.name || brandName(),
   subtitle: (ctx) => auth.roleLabel(ctx.user.role),
   live: true,
 

@@ -341,7 +341,7 @@ async function renderView() {
       ? currentModule.subtitle(ctx)
       : currentModule.subtitle;
   qs("#appbar-title", rootEl).innerHTML =
-    esc(title || "Güvendeyim") + (sub ? `<span class="appbar__sub">${esc(sub)}</span>` : "");
+    esc(title || brandName()) + (sub ? `<span class="appbar__sub">${esc(sub)}</span>` : "");
 
   const isRoot = path === "/" || path === "";
   qs('[data-app="back"]', rootEl).hidden = isRoot;

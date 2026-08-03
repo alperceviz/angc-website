@@ -4,7 +4,7 @@
  * Kulübede ve otoparkta bağlantı sık kopar; kabuk ve tüm modüller kurulumda
  * önbelleğe alınır, çalışma verisi zaten cihazda tutulur.
  */
-const VERSION = "guvendeyim-v1.0.0";
+const VERSION = "siteapp-v1.0.0";
 
 const SHELL = [
   "./",

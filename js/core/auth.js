@@ -11,7 +11,7 @@
 import * as db from "./db.js";
 import * as bus from "./bus.js";
 
-const SKEY = "guvendeyim.session";
+const SKEY = "siteapp.session";
 
 let cache = null;
 

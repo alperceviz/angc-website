@@ -369,7 +369,7 @@ export function buildSeed() {
   return {
     site: {
       // Ürün adı — beyaz etiket kurulumlarında yönetim panelinden değiştirilir.
-      brandName: "Güvendeyim",
+      brandName: "Site Asistanı",
       brandColor: "#ffc800",
 
       name: "Dünya Şehir Kartal",

@@ -8,7 +8,7 @@
  */
 import * as db from "./db.js";
 
-export const DEFAULT_BRAND_NAME = "Güvendeyim";
+export const DEFAULT_BRAND_NAME = "Site Asistanı";
 export const DEFAULT_ACCENT = "#ffc800";
 
 /** Uygulamanın (ürünün) adı — beyaz etiket kurulumlarında değiştirilebilir. */
@@ -77,6 +77,22 @@ export function applyBrand() {
   root.style.setProperty("--accent-soft", `rgba(${r}, ${g}, ${b}, ${theme === "light" ? 0.12 : 0.15})`);
   // Vurgu üzerindeki yazı okunabilir kalsın.
   root.style.setProperty("--accent-ink", luminance(color) > 0.45 ? "#171200" : "#fff8e6");
+  applyNames();
+}
+
+/**
+ * Sekme başlığını ve iOS ana ekran adını yapılandırmadan besler.
+ *
+ * iOS, "Ana Ekrana Ekle" anında `apple-mobile-web-app-title` etiketini canlı
+ * DOM'dan okur; dolayısıyla panelden girilen ad dosyalara dokunmadan doğrudan
+ * ana ekrana yansır. Android tarafında Chrome manifest'teki adı kullanır.
+ */
+export function applyNames() {
+  const site = siteName();
+  const brand = brandName();
+  document.title = site && site !== "Site" ? `${site} · ${brand}` : brand;
+  const tag = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+  if (tag) tag.setAttribute("content", site && site !== "Site" ? site : brand);
 }
 
 /**

@@ -1,4 +1,4 @@
-# Güvendeyim — Site Güvenlik ve Yaşam Uygulaması
+# Site Asistanı — Site Güvenlik ve Yaşam Uygulaması
 
 Sitelerdeki (konut kompleksleri) güvenlik kulübesi ile site sakinlerini **tek bir
 mobil uygulamada** buluşturan, kurulum gerektirmeyen bir PWA.
@@ -8,12 +8,14 @@ misafir bildirimi, talep açma, kargo takibi, tesis rezervasyonu ve acil çağr�
 İkisi aynı veriyi paylaştığı için kapıda "bir dakika, arayıp soralım" adımı ortadan
 kalkıyor.
 
-İlk kurulum **Dünya Şehir Kartal** içindir. Uygulama tek bir siteye gömülü değil:
-site adı, adresi, blokları, telefonları, devriye noktaları, tesisleri, rehberi ve
-marka rengi yönetim panelinden düzenlenir; başka bir siteye kurmak için tek
-yapılacak şey yapılandırmayı dışa aktarıp yeni cihazda içe aktarmaktır.
+İlk kurulum **Dünya Şehir Kartal** içindir. Ürün adı bilerek genel tutuldu; her
+kurulum kendi adını, sitesini ve rengini uygulama içinden belirler. Site adı,
+adresi, blokları, telefonları, devriye noktaları, tesisleri, rehberi, görünen
+uygulama adı ve marka rengi yönetim panelinden düzenlenir — başka bir siteye
+kurmak için tek yapılacak şey yapılandırmayı dışa aktarıp yeni cihazda içe
+aktarmaktır.
 
-> **Önerilen depo adı:** `guvendeyim`
+> **Önerilen depo adı:** `site-asistani`
 > (GitHub → Settings → Repository name üzerinden değiştirebilirsiniz.)
 
 ---
@@ -99,6 +101,19 @@ kayıtları…) sayar ve doğrudan ilgili ekrana götürür.
 Vurgu rengi değiştiğinde düğmeler, sekmeler ve tüm vurgular anında yeni renge
 geçer. Açık temada parlak renkler yazı olarak okunmaz hâle geleceği için renk
 otomatik koyulaştırılır; koyu temada seçilen renk aynen kullanılır.
+
+### Uygulama adı nereye kadar değişiyor?
+
+| Nerede | Kaynağı |
+|---|---|
+| Giriş ekranı, uygulama içi metinler, dışa aktarılan dosya adları | Panel → **Uygulama adı** |
+| Tarayıcı sekmesi | Panel (site adı · uygulama adı) |
+| iPhone'da "Ana Ekrana Ekle" adı | Panel — iOS etiketi kurulum anında canlı sayfadan okur |
+| Android'de ana ekran adı, uygulama simgesi, açılış ekranı | `manifest.webmanifest` + `assets/` ikonları |
+
+Yani depodaki dosyalara dokunmadan, panelden girilen adla her siteye ayrı bir
+kimlik verilebiliyor; yalnızca Android kurulum adı ve simge dosya düzeyinde
+kalıyor.
 
 ### Başka bir siteye kurmak
 

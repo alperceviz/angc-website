@@ -135,7 +135,7 @@ export default {
         </div>
 
         ${banner(
-          "Uygulama simgesi ve ana ekran adı işletim sistemi tarafından kurulum anında alınır; bunları değiştirmek için <code>manifest.webmanifest</code> ve <code>assets/</code> altındaki ikonlar güncellenmelidir.",
+          "Buradaki ad uygulama içinde, tarayıcı sekmesinde ve iPhone'da “Ana Ekrana Ekle” yapıldığında görünen adda kullanılır. Android'de ana ekran adını ve uygulama simgesini değiştirmek için <code>manifest.webmanifest</code> ile <code>assets/</code> altındaki ikonların güncellenmesi gerekir.",
           "",
           "info"
         )}

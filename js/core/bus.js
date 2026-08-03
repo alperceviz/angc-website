@@ -13,7 +13,7 @@ const handlers = new Map();
 let channel = null;
 try {
   if ("BroadcastChannel" in globalThis) {
-    channel = new BroadcastChannel("guvendeyim");
+    channel = new BroadcastChannel("siteapp");
     channel.onmessage = (e) => {
       const { type, payload } = e.data || {};
       if (type) dispatch(type, payload, false);
