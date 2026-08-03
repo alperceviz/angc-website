@@ -1369,12 +1369,15 @@ a {
   color: var(--ok);
 }
 .rolecard__title {
+  display: block;
   font-size: 16px;
   font-weight: 800;
 }
 .rolecard__desc {
+  display: block;
   font-size: 12.5px;
   color: var(--text-faint);
+  margin-top: 2px;
 }
 
 .pindots {
