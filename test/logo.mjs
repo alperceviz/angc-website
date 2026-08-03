@@ -1,0 +1,14 @@
+import { chromium } from "playwright";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+const HERE = dirname(fileURLToPath(import.meta.url));
+const OUT = resolve(HERE, "ekran-goruntuleri");
+const b = await chromium.launch();
+const c = await b.newContext({ viewport:{width:390,height:844}, deviceScaleFactor:2, isMobile:true, hasTouch:true, locale:"tr-TR" });
+const p = await c.newPage();
+await p.goto("http://127.0.0.1:8099/", { waitUntil:"networkidle" });
+await p.evaluate(()=>{sessionStorage.clear();localStorage.clear();});
+await p.reload({ waitUntil:"networkidle" });
+await p.waitForTimeout(400);
+await p.screenshot({ path: resolve(OUT, "logo-login.png") });
+await b.close();

@@ -233,6 +233,8 @@ js/
   ui/                   dom, ikonlar, bileşenler, sheet, toast
   util/                 biçimlendirme, fotoğraf sıkıştırma, indirme
   views/                26 ekran (6'sı yönetim paneli)
+test/                   gerçek tarayıcıda çalışan uçtan uca testler (bkz. test/README.md)
+tools/make_icons.py     uygulama simgelerini üreten betik (bağımlılıksız)
 ```
 
 Öne çıkan birkaç karar:
