@@ -24,6 +24,7 @@ const SHELL = [
   "js/core/router.js",
   "js/core/brand.js",
   "js/core/privacy.js",
+  "js/core/license.js",
   "js/ui/dom.js",
   "js/ui/icons.js",
   "js/ui/toast.js",
@@ -54,6 +55,7 @@ const SHELL = [
   "js/views/admin-collection.js",
   "js/views/admin-data.js",
   "js/views/admin-privacy.js",
+  "js/views/admin-license.js",
   "js/views/privacy.js",
   "js/views/consent.js",
 ];

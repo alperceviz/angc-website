@@ -108,6 +108,11 @@ export default {
           ${kv("Sürüm", "1.0.0")}
           ${kv("Site", esc(db.raw().site.name))}
           ${kv("Oturum", esc(ctx.user.name + " · " + auth.roleLabel(ctx.user.role)))}
+          ${
+            auth.isAdmin()
+              ? ""
+              : kv("Ücret", '<span style="color:var(--ok)">Sizin için ücretsiz</span>')
+          }
           <button class="btn btn--block btn--ghost" type="button" data-act="logout" style="margin-top:12px;color:var(--danger)">
             ${icon("logout")} Oturumu kapat
           </button>

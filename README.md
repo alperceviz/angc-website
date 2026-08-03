@@ -118,6 +118,36 @@ kalıyor.
 
 ---
 
+## Ticari model
+
+**Bedelini site yönetimi öder. Sakinler ve güvenlik görevlileri ödemez.**
+
+Lisans siteye kurulum başına verilir ve daire sayısına göre ölçeklenir; sakin
+uygulamayı indirir, yönetimin tanımladığı hesapla girer, hiçbir aşamada ücret
+görmez. Ayarlar ekranında sakine bunu açıkça söyleyen bir satır var.
+
+Bu modelin tek ciddi tuzağı şu: **lisans biterse güvenlik ölmemeli.** Acil
+çağrının faturaya bağlı olması düşünülemez. Bu yüzden ayrım koda gömülü
+(`js/core/license.js`):
+
+| Süre dolduğunda | |
+|---|---|
+| **Çalışmaya devam eder** | Acil çağrı ve alarm · ziyaretçi giriş/çıkış · misafir bildirimi ve kapı kodu · kargo · olay ve arıza bildirimi · devriye ve nöbet defteri · duyurular · telefon rehberi · sakinlerin tüm ekranları |
+| **Kapanır** | Yönetim raporları · veri ve yapılandırma dışa aktarma · yeni kullanıcı tanımlama (mevcut hesaplar çalışır) |
+
+Süre dolduktan sonra **30 gün ek süre** tanınır; bu sürede hiçbir şey kapanmaz,
+yalnızca yönetici ekranlarında uyarı çıkar. Lisanslı daire sayısı aşılırsa da
+kayıt engellenmez — kimse kapıda kalmasın diye sınır yalnızca uyarı üretir.
+
+Lisans durumu yönetim panelindeki **Lisans ve abonelik** bölümünden görülür ve
+güncellenir (plan, lisans sahibi, daire sayısı, geçerlilik, anahtar).
+
+> Not: denetim şu an istemcide. Bu teknik bir engel değil, ticari bir kayıttır —
+> isteyen tarayıcıdan aşar. Gerçek denetim sunucu bağlantısıyla birlikte sunucu
+> tarafına taşınmalıdır.
+
+---
+
 ## KVKK / kişisel veri koruma
 
 Uygulama sakinlerin adını, telefonunu, daire bilgisini, araç plakasını,
@@ -199,9 +229,10 @@ js/
     bus.js              olay veri yolu + sekmeler arası köprü
     brand.js            marka adı/rengi, tema uyumu, kurulum eksikleri
     privacy.js          aydınlatma metni, rıza, saklama süresi, ilgili kişi hakları
+    license.js          lisans durumu; nelerin kilitlenip nelerin asla kilitlenmediği
   ui/                   dom, ikonlar, bileşenler, sheet, toast
   util/                 biçimlendirme, fotoğraf sıkıştırma, indirme
-  views/                25 ekran (5'i yönetim paneli)
+  views/                26 ekran (6'sı yönetim paneli)
 ```
 
 Öne çıkan birkaç karar:

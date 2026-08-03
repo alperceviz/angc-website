@@ -385,6 +385,9 @@ export function buildSeed() {
       demo: true,
 
       // KVKK: aydınlatma metni sürümü ve saklama süreleri (gün).
+      // Ticari model: bedelini yönetim öder, sakin ve görevli hiç ödemez.
+      license: { plan: "demo", licensedTo: "", units: 0, validUntil: "", key: "" },
+
       privacyVersion: 1,
       retentionEnabled: true,
       retention: { visitors: 90, packages: 180, incidents: 365, logs: 365, photos: 90 },

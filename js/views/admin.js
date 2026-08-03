@@ -1,6 +1,7 @@
 /** Yönetim paneli — kurulum durumu ve özelleştirme bölümleri. */
 import * as db from "../core/db.js";
 import { setupGaps, brandName, siteName } from "../core/brand.js";
+import * as lic from "../core/license.js";
 import { el, actions } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { sectionTitle, listItem, banner, kv, badge } from "../ui/components.js";
@@ -49,6 +50,12 @@ const SECTIONS = [
     count: () => db.list("dataRequests", (x) => x.status === "open").length,
   },
   {
+    to: "/admin/license",
+    icon: "key",
+    title: "Lisans ve abonelik",
+    sub: "Plan, daire sayısı, geçerlilik — bedelini yönetim öder",
+  },
+  {
     to: "/admin/data",
     icon: "download",
     title: "Veri ve kurulum",
@@ -64,9 +71,11 @@ export default {
   async render(ctx) {
     const root = el("<div></div>");
     const gaps = setupGaps();
+    const licWarn = lic.warning();
     const site = db.raw().site;
 
     root.innerHTML = `
+      ${licWarn ? banner(esc(licWarn.text), licWarn.tone, "key") + '<div style="height:12px"></div>' : ""}
       ${
         gaps.length
           ? `<div class="card card--accent">
@@ -114,6 +123,7 @@ export default {
       ${sectionTitle("Kurulum özeti")}
       <div class="card">
         ${kv("Ürün", esc(brandName()))}
+        ${kv("Lisans", esc(lic.planLabel()))}
         ${kv("Site", esc(site.name || "—"))}
         ${kv("Adres", esc(site.address || "—"))}
         ${kv("Blok sayısı", String((site.blocks || []).length))}

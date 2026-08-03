@@ -36,6 +36,7 @@ export const routes = [
   { path: "/admin/site", load: () => import("../views/admin-site.js"), roles: ["admin"] },
   { path: "/admin/data", load: () => import("../views/admin-data.js"), roles: ["admin"] },
   { path: "/admin/privacy", load: () => import("../views/admin-privacy.js"), roles: ["admin"] },
+  { path: "/admin/license", load: () => import("../views/admin-license.js"), roles: ["admin"] },
   { path: "/admin/c/:name", load: () => import("../views/admin-collection.js"), roles: ["admin"] },
 ];
 

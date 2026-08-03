@@ -1,6 +1,7 @@
 /** Veri ve kurulum — yapılandırma taşıma, demodan gerçek kullanıma geçiş. */
 import * as db from "../core/db.js";
 import { siteName, brandName } from "../core/brand.js";
+import * as lic from "../core/license.js";
 import { el, actions, qs } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { sectionTitle, banner, kv } from "../ui/components.js";
@@ -108,6 +109,8 @@ export default {
 
     actions(root, {
       exportConfig: () => {
+        if (lic.isLocked("export"))
+          return ctx.toast.err("Lisans süresi doldu — dışa aktarma kapalı.");
         downloadText(
           `${slug(brandName())}-yapilandirma-${slug(siteName())}.json`,
           db.exportConfig(),
@@ -117,6 +120,8 @@ export default {
       },
       importConfig: () => qs("#cfgfile", root).click(),
       exportAll: () => {
+        if (lic.isLocked("export"))
+          return ctx.toast.err("Lisans süresi doldu — dışa aktarma kapalı.");
         downloadText(
           `${slug(brandName())}-veri-${new Date().toISOString().slice(0, 10)}.json`,
           db.exportJson(),

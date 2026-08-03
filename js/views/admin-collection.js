@@ -17,6 +17,7 @@ import {
   fieldSelect,
 } from "../ui/components.js";
 import { esc, normalizePlate } from "../util/format.js";
+import * as lic from "../core/license.js";
 
 const ICON_CHOICES = [
   ["waves", "Havuz / su"],
@@ -345,6 +346,9 @@ function renderField(f, values) {
 
 async function openForm(ctx, name, id) {
   const schema = SCHEMAS[name];
+  // Yeni kullanıcı tanımlama lisansa bağlı; mevcut hesaplar her koşulda çalışır.
+  if (name === "users" && !id && lic.isLocked("newUser"))
+    return ctx.toast.err("Lisans süresi doldu — yeni kullanıcı tanımlanamıyor.");
   const existing = id ? db.find(name, id) : null;
   let values = existing ? { ...existing } : { ...schema.defaults?.() };
   schema.fields.forEach((f) => {

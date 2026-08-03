@@ -1,5 +1,6 @@
 /** Raporlar — son 7 günün özeti. */
 import * as db from "../core/db.js";
+import * as lic from "../core/license.js";
 import { el } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { sectionTitle, stat, kv, banner, empty } from "../ui/components.js";
@@ -7,12 +8,34 @@ import { esc, duration, INCIDENT_TYPES, INCIDENT_STATUS } from "../util/format.j
 
 const DAY = 24 * 3600 * 1000;
 
+/** Lisans süresi dolduğunda gösterilen ekran. */
+export function lockedNotice(what) {
+  return el(`<div>
+    <div class="empty">${icon("lock", { size: 42 })}
+      <div class="empty__title">${what} kilitli</div>
+      <div class="empty__desc">Site yönetiminin lisans süresi doldu.</div>
+    </div>
+    ${banner(
+      `Kapı kayıtları, kargo, olay bildirimi, devriye ve acil çağrı çalışmaya
+       devam ediyor — güvenlik işlevleri lisansa bağlı değildir.`,
+      "",
+      "shield"
+    )}
+    <a class="btn btn--block btn--primary" href="#/admin/license" style="margin-top:12px">
+      ${icon("key")} Lisans bilgilerine git
+    </a>
+  </div>`);
+}
+
 export default {
   title: "Raporlar",
   subtitle: "Son 7 gün",
   live: true,
 
   async render(ctx) {
+    // Yönetim raporu lisansa bağlıdır; kapı ve sakin işlevleri değildir.
+    if (lic.isLocked("reports")) return lockedNotice("Yönetim raporları");
+
     const since = Date.now() - 7 * DAY;
     const inWindow = (iso) => iso && new Date(iso).getTime() >= since;
 

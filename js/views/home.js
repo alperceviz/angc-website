@@ -2,6 +2,7 @@
 import * as db from "../core/db.js";
 import * as auth from "../core/auth.js";
 import { setupGaps, brandName } from "../core/brand.js";
+import * as lic from "../core/license.js";
 import { el, actions } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import {
@@ -419,6 +420,7 @@ function adminHome(u) {
   const waitingPkgs = db.list("packages", (p) => p.status === "waiting");
   const residents = db.list("users", (x) => x.role === "resident");
   const gaps = setupGaps();
+  const licWarn = lic.warning();
 
   return `
     <div class="card card--accent">
@@ -445,6 +447,22 @@ function adminHome(u) {
       ${stat(waitingPkgs.length, "Bekleyen kargo", waitingPkgs.length ? "warn" : "")}
       ${stat(db.list("bookings").length, "Rezervasyon")}
     </div>
+
+    ${
+      licWarn
+        ? `<button class="card ${licWarn.tone === "danger" ? "card--danger" : "card--accent"}"
+            type="button" data-act="go" data-to="/admin/license"
+            style="width:100%;text-align:left;cursor:pointer;margin-top:10px">
+            <div class="card__head" style="margin:0">
+              <span class="tile__icon">${icon("key")}</span>
+              <div class="card__title">Lisans
+                <div class="faint">${esc(licWarn.text)}</div>
+              </div>
+              ${icon("chevron")}
+            </div>
+          </button>`
+        : ""
+    }
 
     ${
       gaps.length
