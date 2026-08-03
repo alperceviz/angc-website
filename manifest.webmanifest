@@ -1,0 +1,54 @@
+{
+  "name": "Nöbetçi — Site Güvenlik ve Yaşam Uygulaması",
+  "short_name": "Nöbetçi",
+  "description": "Güvenlik kulübesi ve site sakinleri için tek uygulama: nöbet ve devriye takibi, ziyaretçi ve kargo kaydı, olay bildirimi, acil çağrı, duyurular ve tesis rezervasyonu.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "categories": ["productivity", "utilities", "security"],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Acil çağrı",
+      "short_name": "Acil",
+      "url": "./#/emergency",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Misafir bildir",
+      "short_name": "Misafir",
+      "url": "./#/visitors/new",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Olay bildir",
+      "short_name": "Olay",
+      "url": "./#/incidents/new",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
