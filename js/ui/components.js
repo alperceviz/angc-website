@@ -224,28 +224,38 @@ export function wireFields(root, { onPhoto } = {}) {
   });
 
   // Fotoğraf seçimi
-  root.querySelectorAll("[data-photoinput]").forEach((input) => {
-    input.addEventListener("change", async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-      const { compressImage } = await import("../util/media.js");
-      const dataUrl = await compressImage(file);
-      const wrap = input.closest(".photo");
-      const hidden = root.querySelector(`input[name="${input.dataset.photoinput}"]`);
-      if (hidden) hidden.value = dataUrl;
+  root.querySelectorAll("[data-photoinput]").forEach((input) => bindPhoto(root, input, onPhoto));
+}
+
+/**
+ * Tek bir dosya girdisini bağlar.
+ *
+ * Gizli değer alanı `.photo` sarmalayıcısının dışında, form kökünde durur;
+ * bu yüzden fotoğraf silinip yenisi seçildiğinde de bağlama her zaman
+ * özgün kök üzerinden yapılmalıdır — aksi hâlde yeni seçim kaydedilmez.
+ */
+function bindPhoto(root, input, onPhoto) {
+  const name = input.dataset.photoinput;
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    const { compressImage } = await import("../util/media.js");
+    const dataUrl = await compressImage(file);
+    const wrap = input.closest(".photo");
+    const hidden = root.querySelector(`input[name="${name}"]`);
+    if (hidden) hidden.value = dataUrl;
+    wrap.innerHTML =
+      `<img src="${dataUrl}" alt="Seçilen fotoğraf" />` +
+      `<button type="button" class="photo__clear" data-photoclear>${icon("x")}</button>`;
+    wrap.querySelector("[data-photoclear]").addEventListener("click", (e) => {
+      e.preventDefault();
+      if (hidden) hidden.value = "";
       wrap.innerHTML =
-        `<img src="${dataUrl}" alt="Seçilen fotoğraf" />` +
-        `<button type="button" class="photo__clear" data-photoclear>${icon("x")}</button>`;
-      wrap.querySelector("[data-photoclear]").addEventListener("click", (e) => {
-        e.preventDefault();
-        if (hidden) hidden.value = "";
-        wrap.innerHTML =
-          icon("camera", { size: 26 }) +
-          "<span>Fotoğraf çek veya seç</span>" +
-          `<input type="file" accept="image/*" capture="environment" data-photoinput="${input.dataset.photoinput}" />`;
-        wireFields(wrap, { onPhoto });
-      });
-      onPhoto?.(dataUrl);
+        icon("camera", { size: 26 }) +
+        "<span>Fotoğraf çek veya seç</span>" +
+        `<input type="file" accept="image/*" capture="environment" data-photoinput="${name}" />`;
+      bindPhoto(root, wrap.querySelector("[data-photoinput]"), onPhoto);
     });
+    onPhoto?.(dataUrl);
   });
 }

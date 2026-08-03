@@ -3,6 +3,7 @@ import * as db from "../core/db.js";
 import { el, actions, qs } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { badge, kv, sectionTitle, banner, fieldTextarea } from "../ui/components.js";
+import { canView } from "./incidents.js";
 import {
   esc,
   fmtDateTime,
@@ -26,6 +27,15 @@ export default {
       if (!i) {
         root.innerHTML = `<div class="empty">${icon("search", { size: 42 })}
           <div class="empty__title">Kayıt bulunamadı</div></div>`;
+        return;
+      }
+      // Doğrudan bağlantıyla açılan kayıtlar da liste ekranıyla aynı
+      // görünürlük kuralına tabidir.
+      if (!canView(ctx.user, i)) {
+        root.innerHTML = `<div class="empty">${icon("lock", { size: 42 })}
+          <div class="empty__title">Bu kayda erişiminiz yok</div>
+          <div class="empty__desc">Yalnızca kendi talepleriniz ile site genelini
+          ilgilendiren açık kayıtları görüntüleyebilirsiniz.</div></div>`;
         return;
       }
       const staff = ctx.user.role !== "resident";

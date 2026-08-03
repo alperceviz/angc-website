@@ -383,6 +383,11 @@ export function buildSeed() {
 
       // Kurulum durumu: demo kayıtları temizlenene kadar açık kalır.
       demo: true,
+
+      // KVKK: aydınlatma metni sürümü ve saklama süreleri (gün).
+      privacyVersion: 1,
+      retentionEnabled: true,
+      retention: { visitors: 90, packages: 180, incidents: 365, logs: 365, photos: 90 },
     },
     users,
     checkpoints,
@@ -398,6 +403,7 @@ export function buildSeed() {
     bookings,
     logs,
     notifications: [],
+    dataRequests: [],
     settings: { theme: "dark", notify: true, sound: true },
   };
 }

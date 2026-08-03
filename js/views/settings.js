@@ -4,7 +4,6 @@ import * as auth from "../core/auth.js";
 import { el, actions, qs } from "../ui/dom.js";
 import { icon } from "../ui/icons.js";
 import { sectionTitle, switchRow, wireFields, banner, kv } from "../ui/components.js";
-import { downloadText } from "../util/media.js";
 import { esc } from "../util/format.js";
 import { brandName } from "../core/brand.js";
 
@@ -82,14 +81,25 @@ export default {
 
         ${sectionTitle("Veri")}
         <div class="card">
-          ${kv("Kayıt sayısı", String(countAll()))}
           ${kv("Depolama", "Bu cihaz (localStorage)")}
-          <button class="btn btn--block" type="button" data-act="export" style="margin-top:10px">
-            ${icon("download")} Verileri JSON olarak indir
-          </button>
-          <button class="btn btn--block btn--ghost" type="button" data-act="reset" style="margin-top:8px;color:var(--danger)">
-            ${icon("refresh")} Demo verisini sıfırla
-          </button>
+          ${
+            auth.isAdmin()
+              ? `${kv("Kayıt sayısı", String(countAll()))}
+                <button class="btn btn--block" type="button" data-act="adminData" style="margin-top:10px">
+                  ${icon("settings")} Veri ve kurulum bölümüne git
+                </button>
+                <div class="field__hint" style="margin-top:8px">
+                  Tam yedek alma, yapılandırma taşıma ve sıfırlama işlemleri
+                  yönetim panelindedir.
+                </div>`
+              : `<button class="btn btn--block" type="button" data-act="myData" style="margin-top:10px">
+                  ${icon("user")} Verilerim ve haklarım
+                </button>
+                <div class="field__hint" style="margin-top:8px">
+                  Hakkınızda tutulan kayıtları görebilir, dökümünü indirebilir
+                  veya silme talebi oluşturabilirsiniz.
+                </div>`
+          }
         </div>
 
         ${sectionTitle("Hakkında")}
@@ -162,27 +172,10 @@ export default {
         if (res.outcome === "accepted") ctx.toast.ok("Uygulama yüklendi.");
       },
 
-      export: () => {
-        downloadText(
-          `nobetci-veri-${new Date().toISOString().slice(0, 10)}.json`,
-          db.exportJson(),
-          "application/json"
-        );
-        ctx.toast.ok("Veri indiriliyor.");
-      },
-
-      reset: async () => {
-        const ok = await ctx.confirm({
-          title: "Demo verisini sıfırla",
-          desc: "Tüm kayıtlar silinip başlangıç verisi yeniden yüklenir. Bu işlem geri alınamaz.",
-          confirmLabel: "Sıfırla",
-          variant: "danger",
-        });
-        if (!ok) return;
-        await db.reset();
-        ctx.toast.ok("Demo verisi sıfırlandı.");
-        ctx.navigate("/");
-      },
+      // Tam veri dökümü ve sıfırlama yalnızca yönetim panelinde; buradan
+      // yönlendiriyoruz ki her rolün ayarlar ekranında görünmesin.
+      adminData: () => ctx.navigate("/admin/data"),
+      myData: () => ctx.navigate("/privacy"),
 
       logout: async () => {
         const ok = await ctx.confirm({

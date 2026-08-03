@@ -12,7 +12,22 @@ import {
 } from "../util/format.js";
 
 /** Sakinlerin site genelinde görebileceği türler (mahremiyet için sınırlı). */
-const PUBLIC_TYPES = ["technical", "security", "cleaning", "parking", "fire"];
+export const PUBLIC_TYPES = ["technical", "security", "cleaning", "parking", "fire"];
+
+/**
+ * Bir kullanıcının belirli bir kaydı görme yetkisi var mı?
+ *
+ * Liste ekranı zaten filtreliyor ama adres çubuğundan doğrudan
+ * `#/incidents/:id` açılabildiği için ayrıntı ekranı da aynı kuralı
+ * uygulamak zorunda.
+ */
+export function canView(user, incident) {
+  if (!incident) return false;
+  if (user.role !== "resident") return true;
+  if (incident.reporterId === user.id) return true;
+  // Site genelini ilgilendiren açık kayıtlar herkese görünür (bildiren gizli).
+  return PUBLIC_TYPES.includes(incident.type) && incident.status !== "resolved";
+}
 
 export default {
   title: (ctx) => (ctx.user.role === "resident" ? "Taleplerim" : "Olay kayıtları"),

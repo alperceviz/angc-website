@@ -7,6 +7,7 @@ import * as auth from "./core/auth.js";
 import * as bus from "./core/bus.js";
 import { currentPath, match, navigate, query } from "./core/router.js";
 import { applyBrand, setupGaps, brandName } from "./core/brand.js";
+import * as privacy from "./core/privacy.js";
 import { el, qs, qsa } from "./ui/dom.js";
 import { icon } from "./ui/icons.js";
 import { sheet, confirm } from "./ui/sheet.js";
@@ -54,6 +55,7 @@ const MENU = {
     ["/emergency", "siren", "Acil Durum"],
     ["/reports", "chart", "Raporlar"],
     ["/profile", "user", "Profilim"],
+    ["/privacy", "lock", "Gizlilik ve Verilerim"],
     ["/settings", "settings", "Ayarlar"],
   ],
   resident: [
@@ -62,10 +64,12 @@ const MENU = {
     ["/directory", "phone", "Telefon Rehberi"],
     ["/emergency", "siren", "Acil Durum"],
     ["/profile", "user", "Profilim ve Aracım"],
+    ["/privacy", "lock", "Gizlilik ve Verilerim"],
     ["/settings", "settings", "Ayarlar"],
   ],
   admin: [
     ["/admin", "settings", "Yönetim Paneli"],
+    ["/privacy", "lock", "Gizlilik ve Verilerim"],
     ["/reports", "chart", "Raporlar"],
     ["/visitors", "users", "Ziyaretçi Kayıtları"],
     ["/packages", "package", "Kargo & Teslimat"],
@@ -368,8 +372,29 @@ export function render() {
     chromeUserId = null;
     return renderLogin();
   }
+  // Aydınlatma metni onaylanmadan uygulamaya geçilmez.
+  if (!privacy.hasConsent(user)) {
+    chromeUserId = null;
+    return renderConsent(user);
+  }
   renderChrome();
   renderView();
+}
+
+async function renderConsent(user) {
+  const mod = await import("./views/consent.js");
+  rootEl.innerHTML = "";
+  rootEl.appendChild(
+    await mod.default.render({
+      user,
+      done: () => render(),
+      cancel: () => {
+        auth.logout();
+        navigate("/", { replace: true });
+        render();
+      },
+    })
+  );
 }
 
 async function renderLogin() {
@@ -495,6 +520,9 @@ function onDbChange() {
   applyTheme();
   clearTimeout(dbChangeTimer);
   dbChangeTimer = setTimeout(() => {
+    const user = auth.currentUser();
+    // Metin güncellendiyse rıza kapısı yeniden devreye girmeli.
+    if (!user || !privacy.hasConsent(user)) return render();
     renderChrome();
     if (currentModule?.live !== false) renderView();
   }, 60);
@@ -512,10 +540,9 @@ async function boot() {
     const n = myNotifications()[0];
     if (n && document.visibilityState !== "visible") systemNotify(n.title, n.body || "");
   });
-  window.addEventListener("hashchange", () => {
-    renderChrome();
-    renderView();
-  });
+  // render() üzerinden geçiyoruz: oturum ve açık rıza kontrolleri
+  // gezinmede de uygulansın.
+  window.addEventListener("hashchange", () => render());
   window.addEventListener("online", () => toast.ok("Bağlantı geri geldi."));
   window.addEventListener("offline", () => toast.toast("Çevrimdışısınız — kayıtlar cihazda tutuluyor."));
 
@@ -524,6 +551,13 @@ async function boot() {
     window.__installPrompt = e;
     bus.emitLocal("install:available");
   });
+
+  // Saklama süresi dolan kayıtları günde bir kez temizle.
+  try {
+    privacy.purgeIfDue();
+  } catch (err) {
+    console.warn("[privacy] temizlik çalışmadı", err);
+  }
 
   render();
 

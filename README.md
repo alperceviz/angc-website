@@ -96,6 +96,7 @@ kayıtları…) sayar ve doğrudan ilgili ekrana götürür.
 | **Devriye noktaları** | Kontrol noktaları, bölge ve 4 haneli nokta kodları, tur sırası |
 | **Sosyal tesisler** | Rezervasyona açık alanlar, çalışma saatleri, kapasite, dilim süresi |
 | **Telefon rehberi** | Site, acil ve arıza numaraları |
+| **Gizlilik ve veri koruma** | Aydınlatma metni, saklama süreleri, açık rıza durumu, KVKK talepleri |
 | **Veri ve kurulum** | Yapılandırmayı dışa/içe aktarma, demo kayıtlarını temizleme, yedek |
 
 Vurgu rengi değiştiğinde düğmeler, sekmeler ve tüm vurgular anında yeni renge
@@ -114,6 +115,38 @@ otomatik koyulaştırılır; koyu temada seçilen renk aynen kullanılır.
 Yani depodaki dosyalara dokunmadan, panelden girilen adla her siteye ayrı bir
 kimlik verilebiliyor; yalnızca Android kurulum adı ve simge dosya düzeyinde
 kalıyor.
+
+---
+
+## KVKK / kişisel veri koruma
+
+Uygulama sakinlerin adını, telefonunu, daire bilgisini, araç plakasını,
+ziyaretçi kimliklerini ve olay fotoğraflarını tutuyor; bunların hepsi kişisel
+veri. Aşağıdakiler bu yüzden ürünün içinde:
+
+- **Açık rıza kapısı.** Aydınlatma metni onaylanmadan uygulamaya girilemez —
+  adres çubuğuna doğrudan bir yol yazarak da atlanamaz. Onay, kullanıcı ve metin
+  sürümü ile birlikte kaydedilir; yönetim metni güncellediğinde sürüm artar ve
+  herkesten yeniden onay istenir.
+- **Aydınlatma metni.** Site adına göre doldurulan bir taslak hazır gelir
+  (işlenen veriler, amaç, hukuki sebep, saklama, aktarım, m.11 hakları, başvuru).
+  Yönetim panelinden düzenlenebilir. **Taslaktır** — yayına almadan önce veri
+  sorumlusu ve hukuk danışmanı gözden geçirmelidir.
+- **Saklama süreleri ve otomatik temizlik.** Ziyaretçi, kargo, olay, fotoğraf ve
+  defter kayıtları için ayrı gün sayıları tanımlanır; süresi dolan kayıtlar günde
+  bir kez silinir. Fotoğrafların kendi süresi vardır: kayıt dururken görseli
+  temizlenebilir. Her temizlik nöbet defterine yazılır, sessizce olmaz.
+- **İlgili kişi hakları (m.11).** Sakin, hakkında tutulan kayıtların sayısını
+  görür, tam dökümünü JSON olarak indirir ve silme talebi açar. Talepler yönetim
+  panelinde listelenir; silme uygulandığında kişisel kayıtlar silinir, açtığı
+  talepler bildiren bilgisi kaldırılarak korunur, nöbet defteri denetim amacıyla
+  saklanır.
+- **Rol bazlı görünürlük.** Sakin yalnızca kendi taleplerini ve site genelini
+  ilgilendiren açık arızaları görür — liste ekranında da, doğrudan bağlantıyla
+  açılan ayrıntı ekranında da. Daire rehberi sakine kapalıdır; görevliye
+  "bu bilgiler görev gereği kullanılır" uyarısıyla açılır.
+
+---
 
 ### Başka bir siteye kurmak
 
@@ -165,9 +198,10 @@ js/
     router.js           hash yönlendirme + rol bazlı erişim
     bus.js              olay veri yolu + sekmeler arası köprü
     brand.js            marka adı/rengi, tema uyumu, kurulum eksikleri
+    privacy.js          aydınlatma metni, rıza, saklama süresi, ilgili kişi hakları
   ui/                   dom, ikonlar, bileşenler, sheet, toast
   util/                 biçimlendirme, fotoğraf sıkıştırma, indirme
-  views/                22 ekran (4'ü yönetim paneli)
+  views/                25 ekran (5'i yönetim paneli)
 ```
 
 Öne çıkan birkaç karar:

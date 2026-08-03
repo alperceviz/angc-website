@@ -42,6 +42,13 @@ const SECTIONS = [
     count: () => db.list("contacts").length,
   },
   {
+    to: "/admin/privacy",
+    icon: "lock",
+    title: "Gizlilik ve veri koruma",
+    sub: "Aydınlatma metni, saklama süreleri, KVKK talepleri",
+    count: () => db.list("dataRequests", (x) => x.status === "open").length,
+  },
+  {
     to: "/admin/data",
     icon: "download",
     title: "Veri ve kurulum",

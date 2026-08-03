@@ -27,6 +27,7 @@ export const routes = [
   { path: "/residents", load: () => import("../views/residents.js"), roles: ["guard", "admin"] },
   { path: "/reports", load: () => import("../views/reports.js"), roles: ["admin", "guard"] },
 
+  { path: "/privacy", load: () => import("../views/privacy.js") },
   { path: "/profile", load: () => import("../views/profile.js") },
   { path: "/settings", load: () => import("../views/settings.js") },
 
@@ -34,6 +35,7 @@ export const routes = [
   { path: "/admin", load: () => import("../views/admin.js"), roles: ["admin"] },
   { path: "/admin/site", load: () => import("../views/admin-site.js"), roles: ["admin"] },
   { path: "/admin/data", load: () => import("../views/admin-data.js"), roles: ["admin"] },
+  { path: "/admin/privacy", load: () => import("../views/admin-privacy.js"), roles: ["admin"] },
   { path: "/admin/c/:name", load: () => import("../views/admin-collection.js"), roles: ["admin"] },
 ];
 

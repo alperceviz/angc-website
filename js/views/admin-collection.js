@@ -128,6 +128,18 @@ const SCHEMAS = {
         return "Son yönetici hesabı silinemez.";
       return null;
     },
+    // Silme engeli tek başına yetmiyor: son yönetici rolünü değiştirerek de
+    // panele erişimi tamamen kapatabilirdi.
+    canSave: (existing, values) => {
+      if (
+        existing &&
+        existing.role === "admin" &&
+        values.role !== "admin" &&
+        db.list("users", (u) => u.role === "admin").length <= 1
+      )
+        return "Son yönetici hesabının rolü değiştirilemez. Önce başka bir yönetici tanımlayın.";
+      return null;
+    },
   },
 
   checkpoints: {
@@ -371,7 +383,7 @@ async function openForm(ctx, name, id) {
 
       box.querySelector('[data-keep="1"]').addEventListener("click", () => {
         const v = formData(box);
-        const err = schema.validate?.(v);
+        const err = schema.validate?.(v) || schema.canSave?.(existing, v);
         if (err) {
           qs("#formerr", box).innerHTML = banner(err, "danger", "alert");
           return;

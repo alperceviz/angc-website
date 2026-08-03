@@ -33,6 +33,7 @@ function blank() {
     contacts: [],
     logs: [],
     notifications: [],
+    dataRequests: [],
     settings: { theme: "dark", notify: true, sound: true },
   };
 }
@@ -245,6 +246,7 @@ export function clearOperationalData({ users = false, keepUserId = "" } = {}) {
     "bookings",
     "logs",
     "notifications",
+    "dataRequests",
     "announcements",
     "vehicles",
   ].forEach((k) => (state[k] = []));

@@ -23,6 +23,7 @@ const SHELL = [
   "js/core/auth.js",
   "js/core/router.js",
   "js/core/brand.js",
+  "js/core/privacy.js",
   "js/ui/dom.js",
   "js/ui/icons.js",
   "js/ui/toast.js",
@@ -52,6 +53,9 @@ const SHELL = [
   "js/views/admin-site.js",
   "js/views/admin-collection.js",
   "js/views/admin-data.js",
+  "js/views/admin-privacy.js",
+  "js/views/privacy.js",
+  "js/views/consent.js",
 ];
 
 self.addEventListener("install", (event) => {
