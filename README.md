@@ -1,2 +1,284 @@
-# angc-website
-Official website of Ancient Golden Coin (ANGC) — a community-driven Solana meme token inspired by the timeless value of ancient civilizations and reborn through blockchain technology.
+# Site Asistanı — Site Güvenlik ve Yaşam Uygulaması
+
+Sitelerdeki (konut kompleksleri) güvenlik kulübesi ile site sakinlerini **tek bir
+mobil uygulamada** buluşturan, kurulum gerektirmeyen bir PWA.
+
+Görevli tarafında nöbet, devriye, ziyaretçi, kargo ve olay kaydı; sakin tarafında
+misafir bildirimi, talep açma, kargo takibi, tesis rezervasyonu ve acil çağrı var.
+İkisi aynı veriyi paylaştığı için kapıda "bir dakika, arayıp soralım" adımı ortadan
+kalkıyor.
+
+İlk kurulum **Dünya Şehir Kartal** içindir. Ürün adı bilerek genel tutuldu; her
+kurulum kendi adını, sitesini ve rengini uygulama içinden belirler. Site adı,
+adresi, blokları, telefonları, devriye noktaları, tesisleri, rehberi, görünen
+uygulama adı ve marka rengi yönetim panelinden düzenlenir — başka bir siteye
+kurmak için tek yapılacak şey yapılandırmayı dışa aktarıp yeni cihazda içe
+aktarmaktır.
+
+> **Önerilen depo adı:** `site-asistani`
+> (GitHub → Settings → Repository name üzerinden değiştirebilirsiniz.)
+
+---
+
+## Sadece çalışanlar için mi olmalı, sakinler de yüklemeli mi?
+
+Kısa cevap: **tek uygulama, iki rol.** Sakinler de yüklemeli.
+
+Nedeni şu: bu işin değerinin büyük kısmı iki tarafın *aynı kaydı* paylaşmasından
+çıkıyor. Sakin misafirini önceden bildirdiğinde güvenlik kimseyi aramıyor; güvenlik
+kargoyu teslim aldığında sakin anında biliyor; sakin arıza bildirdiğinde kayıt zaten
+nöbet defterine düşüyor. İki ayrı uygulama yazmak bu paylaşımı bir entegrasyon
+problemine dönüştürürdü — ve aynı ekranların çoğunu iki kez yazmak gerekirdi.
+
+Yalnızca çalışan uygulaması yapılırsa elinizde dijitalleştirilmiş bir nöbet defteri
+kalır; faydalı ama sakinin hayatında hiçbir şey değişmez. Asıl fark, kapıdaki
+sürtünmenin kaybolmasında.
+
+Buna karşılık **görünürlük rol bazında ayrılmalı** — bu uygulamada ayrıldı:
+
+| | Görevli | Sakin | Yönetim |
+|---|---|---|---|
+| Ziyaretçi kayıtları | Tümü | Yalnızca kendi misafirleri | Tümü |
+| Sakin/daire rehberi | Var (uyarı bandıyla) | Yok | Var |
+| Olay kayıtları | Tümü | Kendi talepleri + site geneli açık arızalar (isimsiz) | Tümü |
+| Devriye ve nöbet defteri | Var | Yok | Var |
+| Duyuru yayınlama | Var | Yok | Var |
+| Acil çağrı | Destek çağırır | Görevliye alarm gönderir | Bildirim alır |
+
+Sakinin gürültü şikâyeti site geneline düşmez, daire rehberi sakine açılmaz,
+görevlinin rehber ekranı da "bu bilgiler görev gereği kullanılır" uyarısıyla gelir.
+
+---
+
+## Ekranlar
+
+**Güvenlik görevlisi**
+
+- **Vardiya** — devral / devret, süre takibi, sonraki görevliye devir notu
+- **Devriye** — 8 kontrol noktası, noktadaki koda göre doğrulama, isteğe bağlı GPS
+  damgası, eksik nokta uyarısı, tur geçmişi
+- **Ziyaretçi** — giriş/çıkış kaydı, plaka, 6 haneli misafir kodu doğrulama, daire
+  ve ev sahibi otomatik eşleşmesi
+- **Kargo** — teslim alma, teslim kodu, 24 saati geçen kargo uyarısı, teslim etme
+- **Olay** — kategori, aciliyet, fotoğraflı kayıt, durum yönetimi, işlem geçmişi
+- **Nöbet defteri** — tüm hareketlerin kronolojik dökümü, `.txt` dışa aktarım
+- **Sakin rehberi** — isim, daire veya plakadan hızlı arama
+
+**Site sakini**
+
+- **Misafir bildir** — kapı kodu üretir, paylaş düğmesiyle iletir
+- **Talep / arıza aç** — fotoğraflı, durumu bildirimle takip edilir
+- **Kargolarım** — kulübede bekleyen kargolar ve teslim kodu
+- **Hizmetler** — havuz, fitness, tenis kortu, etkinlik salonu rezervasyonu
+- **Acil çağrı** — 1,5 saniye basılı tutunca görevlilerde tam ekran sesli alarm
+- **Duyurular, telefon rehberi, araç kaydı**
+
+**Site yönetimi**
+
+- Duyuru yayınlama (sabitleme dahil), olay takibi, sakin ve daire kayıtları
+- **Raporlar** — 7 günlük hareket grafiği, devriye uyum oranı, olay türü dağılımı,
+  ortalama çözüm süresi
+- **Yönetim paneli** — aşağıya bakın
+
+---
+
+## Yönetim paneli ve yerel özelleştirme
+
+Yönetici rolüyle girildiğinde alt sekmelerde **Yönetim** görünür. Panel, kurulumun
+eksik kalan maddelerini (girilmemiş telefon, tanımsız blok, duruyor olan demo
+kayıtları…) sayar ve doğrudan ilgili ekrana götürür.
+
+| Bölüm | Ne düzenlenir |
+|---|---|
+| **Site bilgileri** | Ad, kısa ad, adres, güvenlik ve yönetim telefonu, acil toplanma alanı, blok listesi |
+| **Marka** | Uygulama adı (beyaz etiket) ve vurgu rengi — canlı önizlemeli |
+| **Kullanıcılar** | Görevli / sakin / yönetici hesapları, blok-daire, sicil, PIN sıfırlama |
+| **Devriye noktaları** | Kontrol noktaları, bölge ve 4 haneli nokta kodları, tur sırası |
+| **Sosyal tesisler** | Rezervasyona açık alanlar, çalışma saatleri, kapasite, dilim süresi |
+| **Telefon rehberi** | Site, acil ve arıza numaraları |
+| **Gizlilik ve veri koruma** | Aydınlatma metni, saklama süreleri, açık rıza durumu, KVKK talepleri |
+| **Veri ve kurulum** | Yapılandırmayı dışa/içe aktarma, demo kayıtlarını temizleme, yedek |
+
+Vurgu rengi değiştiğinde düğmeler, sekmeler ve tüm vurgular anında yeni renge
+geçer. Açık temada parlak renkler yazı olarak okunmaz hâle geleceği için renk
+otomatik koyulaştırılır; koyu temada seçilen renk aynen kullanılır.
+
+### Uygulama adı nereye kadar değişiyor?
+
+| Nerede | Kaynağı |
+|---|---|
+| Giriş ekranı, uygulama içi metinler, dışa aktarılan dosya adları | Panel → **Uygulama adı** |
+| Tarayıcı sekmesi | Panel (site adı · uygulama adı) |
+| iPhone'da "Ana Ekrana Ekle" adı | Panel — iOS etiketi kurulum anında canlı sayfadan okur |
+| Android'de ana ekran adı, uygulama simgesi, açılış ekranı | `manifest.webmanifest` + `assets/` ikonları |
+
+Yani depodaki dosyalara dokunmadan, panelden girilen adla her siteye ayrı bir
+kimlik verilebiliyor; yalnızca Android kurulum adı ve simge dosya düzeyinde
+kalıyor.
+
+---
+
+## Ticari model
+
+**Bedelini site yönetimi öder. Sakinler ve güvenlik görevlileri ödemez.**
+
+Lisans siteye kurulum başına verilir ve daire sayısına göre ölçeklenir; sakin
+uygulamayı indirir, yönetimin tanımladığı hesapla girer, hiçbir aşamada ücret
+görmez. Ayarlar ekranında sakine bunu açıkça söyleyen bir satır var.
+
+Bu modelin tek ciddi tuzağı şu: **lisans biterse güvenlik ölmemeli.** Acil
+çağrının faturaya bağlı olması düşünülemez. Bu yüzden ayrım koda gömülü
+(`js/core/license.js`):
+
+| Süre dolduğunda | |
+|---|---|
+| **Çalışmaya devam eder** | Acil çağrı ve alarm · ziyaretçi giriş/çıkış · misafir bildirimi ve kapı kodu · kargo · olay ve arıza bildirimi · devriye ve nöbet defteri · duyurular · telefon rehberi · sakinlerin tüm ekranları |
+| **Kapanır** | Yönetim raporları · veri ve yapılandırma dışa aktarma · yeni kullanıcı tanımlama (mevcut hesaplar çalışır) |
+
+Süre dolduktan sonra **30 gün ek süre** tanınır; bu sürede hiçbir şey kapanmaz,
+yalnızca yönetici ekranlarında uyarı çıkar. Lisanslı daire sayısı aşılırsa da
+kayıt engellenmez — kimse kapıda kalmasın diye sınır yalnızca uyarı üretir.
+
+Lisans durumu yönetim panelindeki **Lisans ve abonelik** bölümünden görülür ve
+güncellenir (plan, lisans sahibi, daire sayısı, geçerlilik, anahtar).
+
+> Not: denetim şu an istemcide. Bu teknik bir engel değil, ticari bir kayıttır —
+> isteyen tarayıcıdan aşar. Gerçek denetim sunucu bağlantısıyla birlikte sunucu
+> tarafına taşınmalıdır.
+
+---
+
+## KVKK / kişisel veri koruma
+
+Uygulama sakinlerin adını, telefonunu, daire bilgisini, araç plakasını,
+ziyaretçi kimliklerini ve olay fotoğraflarını tutuyor; bunların hepsi kişisel
+veri. Aşağıdakiler bu yüzden ürünün içinde:
+
+- **Açık rıza kapısı.** Aydınlatma metni onaylanmadan uygulamaya girilemez —
+  adres çubuğuna doğrudan bir yol yazarak da atlanamaz. Onay, kullanıcı ve metin
+  sürümü ile birlikte kaydedilir; yönetim metni güncellediğinde sürüm artar ve
+  herkesten yeniden onay istenir.
+- **Aydınlatma metni.** Site adına göre doldurulan bir taslak hazır gelir
+  (işlenen veriler, amaç, hukuki sebep, saklama, aktarım, m.11 hakları, başvuru).
+  Yönetim panelinden düzenlenebilir. **Taslaktır** — yayına almadan önce veri
+  sorumlusu ve hukuk danışmanı gözden geçirmelidir.
+- **Saklama süreleri ve otomatik temizlik.** Ziyaretçi, kargo, olay, fotoğraf ve
+  defter kayıtları için ayrı gün sayıları tanımlanır; süresi dolan kayıtlar günde
+  bir kez silinir. Fotoğrafların kendi süresi vardır: kayıt dururken görseli
+  temizlenebilir. Her temizlik nöbet defterine yazılır, sessizce olmaz.
+- **İlgili kişi hakları (m.11).** Sakin, hakkında tutulan kayıtların sayısını
+  görür, tam dökümünü JSON olarak indirir ve silme talebi açar. Talepler yönetim
+  panelinde listelenir; silme uygulandığında kişisel kayıtlar silinir, açtığı
+  talepler bildiren bilgisi kaldırılarak korunur, nöbet defteri denetim amacıyla
+  saklanır.
+- **Rol bazlı görünürlük.** Sakin yalnızca kendi taleplerini ve site genelini
+  ilgilendiren açık arızaları görür — liste ekranında da, doğrudan bağlantıyla
+  açılan ayrıntı ekranında da. Daire rehberi sakine kapalıdır; görevliye
+  "bu bilgiler görev gereği kullanılır" uyarısıyla açılır.
+
+---
+
+### Başka bir siteye kurmak
+
+1. Yönetim paneli → **Veri ve kurulum → Yapılandırmayı dışa aktar**.
+   Dosyaya yalnızca site ayarları, devriye noktaları, tesisler ve rehber girer —
+   **kullanıcılar ve tüm kişisel kayıtlar dışarıda kalır**.
+2. Yeni kurulumda aynı ekrandan dosyayı yükleyin.
+3. Kullanıcıları tanımlayın, ardından **Demo hareketlerini temizle** ile
+   ziyaretçi/kargo/olay/defter kayıtlarını sıfırlayın. Site yapılandırması korunur.
+
+---
+
+## Denemek için
+
+Statik dosyalar; derleme adımı yok.
+
+```bash
+python3 -m http.server 8099
+# http://127.0.0.1:8099
+```
+
+**Demo hesapları:** giriş ekranında rol → kişi seçilir, **PIN her hesap için `1234`**.
+
+> **İki rolü aynı anda görmek için:** aynı tarayıcıda ikinci bir sekme açın ve
+> orada farklı bir rolle giriş yapın. Oturum sekmeye özel (`sessionStorage`),
+> veri ortak (`localStorage`) tutulduğu için sakin tarafında yapılan bildirim
+> görevli sekmesinde anında görünür — acil çağrıda alarm ekranı da dahil.
+
+**Telefona kurmak için:** Ayarlar → "Ana ekrana ekle". iOS'ta Safari → Paylaş →
+Ana Ekrana Ekle; Android'de Chrome menüsü → Uygulamayı yükle.
+
+---
+
+## Teknik yapı
+
+Bağımlılık yok, paket yöneticisi yok, derleme yok — sade ES modülleri.
+
+```
+index.html              uygulama kabuğu
+manifest.webmanifest    PWA tanımı (kısayollar dahil)
+sw.js                   service worker — çevrimdışı önbellek
+css/app.css             tasarım sistemi (koyu + açık tema, tek elle kullanım)
+js/
+  app.js                kabuk: üst çubuk, sekmeler, bildirimler, alarm
+  core/
+    db.js               koleksiyon API'li yerel veri katmanı
+    seed.js             demo verisi
+    auth.js             oturum, roller, vardiya
+    router.js           hash yönlendirme + rol bazlı erişim
+    bus.js              olay veri yolu + sekmeler arası köprü
+    brand.js            marka adı/rengi, tema uyumu, kurulum eksikleri
+    privacy.js          aydınlatma metni, rıza, saklama süresi, ilgili kişi hakları
+    license.js          lisans durumu; nelerin kilitlenip nelerin asla kilitlenmediği
+  ui/                   dom, ikonlar, bileşenler, sheet, toast
+  util/                 biçimlendirme, fotoğraf sıkıştırma, indirme
+  views/                26 ekran (6'sı yönetim paneli)
+test/                   gerçek tarayıcıda çalışan uçtan uca testler (bkz. test/README.md)
+tools/make_icons.py     uygulama simgelerini üreten betik (bağımlılıksız)
+```
+
+Öne çıkan birkaç karar:
+
+- **Çevrimdışı öncelikli.** Kulübede ve otoparkta bağlantı kopar; tüm modüller
+  kurulumda önbelleğe alınır, veri cihazda tutulur.
+- **Fotoğraflar sıkıştırılır.** `capture="environment"` ile doğrudan kamera açılır,
+  görsel 1000 px kenara ölçeklenip JPEG'e çevrilir.
+- **Büyük dokunma hedefleri.** Tüm birincil düğmeler en az 48 px; eldivenli ve
+  karanlıkta kullanım varsayılmıştır.
+- **Erişilebilirlik.** `aria-pressed` / `role="switch"` / `aria-current`, klavye
+  ile panik butonu, `prefers-reduced-motion` desteği.
+- **Tek şema, dört ekran.** Kullanıcı, devriye noktası, tesis ve rehber
+  düzenleyicileri aynı şema güdümlü bileşeni paylaşır
+  (`js/views/admin-collection.js`); yeni bir koleksiyon eklemek bir şema tanımı
+  yazmaktan ibarettir.
+
+### Gerçek kuruluma geçiş
+
+Bu sürüm **tek cihazda çalışan bir tanıtım kurulumudur**: veriler yalnızca o
+tarayıcıda tutulur ve PIN doğrulaması istemcide yapılır. Gerçek bir sitede
+kullanılacaksa üç şey gerekir:
+
+1. **Sunucu.** `js/core/db.js` içindeki `list / find / insert / update / remove`
+   fonksiyonlarının gövdesi bir API çağrısıyla değiştirilir. View'lar depolamayı
+   hiç bilmediği için başka hiçbir dosyaya dokunmak gerekmez.
+2. **Gerçek kimlik doğrulama.** PIN kontrolü sunucuya taşınır (`js/core/auth.js`),
+   oturum belirteçle yürütülür.
+3. **Gerçek anlık iletim.** `js/core/bus.js` içindeki `BroadcastChannel` köprüsünün
+   yerine WebSocket veya Web Push konur; acil çağrı böylece uygulama kapalıyken de
+   görevlinin telefonunu çaldırır.
+
+Yol haritasında ayrıca: kontrol noktalarında QR/NFC etiketi okuma, tek panelden
+çoklu site yönetimi, aidat/ödeme, kamera görüntüsü entegrasyonu ve KVKK aydınlatma
+metni akışı var.
+
+---
+
+## Alan adı
+
+Bu depo daha önce farklı bir projeyi barındırıyordu ve kökteki `CNAME` dosyası eski
+alan adına işaret ediyordu; depo tamamen bu uygulamaya ayrıldığı için o dosya
+kaldırıldı. Site artık `kullanıcıadı.github.io/depo-adı` adresinden yayınlanır.
+
+Kendi alan adınızı bağlamak için depo köküne tek satırlık bir `CNAME` dosyası
+ekleyip içine alan adını yazmanız ve alan adının DNS kayıtlarını GitHub Pages'e
+yönlendirmeniz yeterli.
